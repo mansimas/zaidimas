@@ -24,10 +24,4 @@ end
 gem 'redis', '~> 3.1.0'
 gem 'sidekiq'
 gem 'hiredis'
-gem "firehose"
-gem "airbrake"
-gem "rainbows",   :require => false
-gem "rack"
-gem "foreman",    :require => false
-gem "capistrano", :require => false
-gem 'faraday'
+gem 'websocket-rails', '~> 0.7.0'
