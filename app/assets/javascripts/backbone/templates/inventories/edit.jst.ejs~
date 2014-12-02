@@ -1,0 +1,15 @@
+<h1>Edit inventory</h1>
+
+<form id="edit-inventory" name="inventory">
+  <div class="field">
+    <label for="item"> item:</label>
+    <input type="text" name="item" id="item" value="<%= item %>" >
+  </div>
+
+  <div class="actions">
+    <input type="submit" value="Update Inventory" />
+  </div>
+
+</form>
+
+<a href="#/index">Back</a>

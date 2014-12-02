@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  stat: 1
+  health: 1
+  strength: 1
+  user_id: 
+
+two:
+  stat: 1
+  health: 1
+  strength: 1
+  user_id: 

@@ -1,0 +1,13 @@
+Sprint.Views.Monsters ||= {}
+
+class Sprint.Views.Monsters.TextView extends Backbone.View
+  template: JST["backbone/templates/monsters/text"]
+
+  tagName: "tr"
+
+  render: ->
+    @$el.html(@template(@model.toJSON() ))
+    return this
+
+
+

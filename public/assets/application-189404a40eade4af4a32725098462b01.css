@@ -1,0 +1,161 @@
+/* line 1, c:/Sites/sprint/app/assets/stylesheets/scaffolds.css.scss */
+body {
+  background-color: #fff;
+  color: #333;
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+/* line 9, c:/Sites/sprint/app/assets/stylesheets/scaffolds.css.scss */
+p, ol, ul, td {
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+/* line 15, c:/Sites/sprint/app/assets/stylesheets/scaffolds.css.scss */
+pre {
+  background-color: #eee;
+  padding: 10px;
+  font-size: 11px;
+}
+
+/* line 21, c:/Sites/sprint/app/assets/stylesheets/scaffolds.css.scss */
+a {
+  color: #000;
+}
+/* line 23, c:/Sites/sprint/app/assets/stylesheets/scaffolds.css.scss */
+a:visited {
+  color: #666;
+}
+/* line 26, c:/Sites/sprint/app/assets/stylesheets/scaffolds.css.scss */
+a:hover {
+  color: #fff;
+  background-color: #000;
+}
+
+/* line 33, c:/Sites/sprint/app/assets/stylesheets/scaffolds.css.scss */
+div.field, div.actions {
+  margin-bottom: 10px;
+}
+
+/* line 38, c:/Sites/sprint/app/assets/stylesheets/scaffolds.css.scss */
+#notice {
+  color: green;
+}
+
+/* line 42, c:/Sites/sprint/app/assets/stylesheets/scaffolds.css.scss */
+.field_with_errors {
+  padding: 2px;
+  background-color: red;
+  display: table;
+}
+
+/* line 48, c:/Sites/sprint/app/assets/stylesheets/scaffolds.css.scss */
+#error_explanation {
+  width: 450px;
+  border: 2px solid red;
+  padding: 7px;
+  padding-bottom: 0;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+}
+/* line 55, c:/Sites/sprint/app/assets/stylesheets/scaffolds.css.scss */
+#error_explanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 12px;
+  margin: -7px;
+  margin-bottom: 0px;
+  background-color: #c00;
+  color: #fff;
+}
+/* line 65, c:/Sites/sprint/app/assets/stylesheets/scaffolds.css.scss */
+#error_explanation ul li {
+  font-size: 12px;
+  list-style: square;
+}
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+
+
+ */
+/* body {background-image: url(/assets/bg1.png);} */
+/* line 19, /home/vartotojas/rails/sprint/app/assets/stylesheets/application.css.scss */
+body {
+  padding: 0;
+  margin: 0;
+}
+
+/* line 23, /home/vartotojas/rails/sprint/app/assets/stylesheets/application.css.scss */
+#pirmas {
+  background-image: url("/assets/rails.png");
+  padding-bottom: 30px;
+  padding-left: 45px;
+  background-size: 45px 45px;
+}
+
+/* line 28, /home/vartotojas/rails/sprint/app/assets/stylesheets/application.css.scss */
+#antras {
+  background-image: url("/assets/rails10.png");
+  padding-bottom: 30px;
+  padding-left: 45px;
+  background-size: 45px 45px;
+}
+
+/* line 33, /home/vartotojas/rails/sprint/app/assets/stylesheets/application.css.scss */
+#trecias {
+  background-image: url("/assets/rails20.png");
+  padding-bottom: 30px;
+  padding-left: 45px;
+  background-size: 45px 45px;
+}
+
+/* line 38, /home/vartotojas/rails/sprint/app/assets/stylesheets/application.css.scss */
+#ketvirtas {
+  background-image: url("/assets/rails30.png");
+  padding-bottom: 30px;
+  padding-left: 45px;
+  background-size: 45px 45px;
+}
+
+/* line 43, /home/vartotojas/rails/sprint/app/assets/stylesheets/application.css.scss */
+#penktas {
+  background-image: url("/assets/rails40.png");
+  padding-bottom: 30px;
+  padding-left: 45px;
+  background-size: 45px 45px;
+}
+
+/* line 48, /home/vartotojas/rails/sprint/app/assets/stylesheets/application.css.scss */
+#sestas {
+  background-image: url("/assets/rails50.png");
+  padding-bottom: 30px;
+  padding-left: 45px;
+  background-size: 45px 45px;
+}
+
+/* line 53, /home/vartotojas/rails/sprint/app/assets/stylesheets/application.css.scss */
+#septintas {
+  background-image: url("/assets/rails60.png");
+  padding-bottom: 30px;
+  padding-left: 45px;
+  background-size: 45px 45px;
+}
+
+/* line 59, /home/vartotojas/rails/sprint/app/assets/stylesheets/application.css.scss */
+#maps {
+  border: 1px solid black;
+}

@@ -1,0 +1,1 @@
+<div style = "font-weight: 900;font-size: 150%; padding-left: 10px; padding-top: 5px; margin-top:0px; padding-bottom:30px;">Your Health Points: {{= player_hp }}  </div>

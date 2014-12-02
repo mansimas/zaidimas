@@ -1,0 +1,33 @@
+<div style="height: 30px;">
+
+  <span><a href="#/index" class="use_medicine1" id="pirmas" ></a></span>
+<% if (router.stats.models[0].attributes.level > 9) { %>
+  <span><a href="#/index" class="use_medicine2" id="antras" ></a></span><% } %>
+<% if (router.stats.models[0].attributes.level > 19) { %>
+  <span><a href="#/index" class="use_medicine3" id="trecias" ></a></span><% } %>
+<% if (router.stats.models[0].attributes.level > 29) { %>
+  <span><a href="#/index" class="use_medicine1" id="ketvirtas" ></a></span><% } %>
+<% if (router.stats.models[0].attributes.level > 39) { %>
+  <span><a href="#/index" class="use_medicine2" id="penktas" ></a></span><% } %>
+<% if (router.stats.models[0].attributes.level > 49) { %>
+  <span><a href="#/index" class="use_medicine3" id="sestas" ></a></span><% } %>
+<% if (router.stats.models[0].attributes.level > 59) { %>
+  <span><a href="#/index" class="use_medicine3" id="septintas" ></a></span><% } %>
+  
+  <br>
+  <div style="padding-top:30px;">
+    <span style="position:absolute; padding-left:7px;"><%= medicine1 %></span>
+<% if (router.stats.models[0].attributes.level > 9) { %>
+    <span style="position:absolute; padding-left:55px;"><%= medicine2 %></span><% } %>
+<% if (router.stats.models[0].attributes.level > 19) { %>
+    <span style="position:absolute; padding-left:100px;"><%= medicine3 %></span><% } %>
+<% if (router.stats.models[0].attributes.level > 29) { %>
+    <span style="position:absolute; padding-left:142px;"><%= medicine4 %></span><% } %>
+<% if (router.stats.models[0].attributes.level > 39) { %>
+    <span style="position:absolute; padding-left:189px;"><%= medicine5 %></span><% } %>
+<% if (router.stats.models[0].attributes.level > 49) { %>
+    <span style="position:absolute; padding-left:233px;"><%= medicine6 %></span><% } %>
+<% if (router.stats.models[0].attributes.level > 59) { %>
+    <span style="position:absolute; padding-left:280px;"><%= medicine7 %></span><% } %>
+  </div>
+</div>

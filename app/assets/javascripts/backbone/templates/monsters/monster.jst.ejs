@@ -1,0 +1,16 @@
+<td><%= name %></td>
+<td><%= rang %></td>
+<td><%= level %></td>
+<td><%= health %></td>
+<td><%= experience %></td>
+
+<td><a href="#/<%= id %>/showMonster">Show</td>
+<% if (router.stats.models[0].attributes.username == "adminas") { %>
+<td><a href="#/<%= id %>/editMonster">Edit</td>
+<td><a href="#/<%= id %>/destroy" class="destroy">Destroy</a></td>
+<% } %>
+
+
+
+
+

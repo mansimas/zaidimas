@@ -1,0 +1,18 @@
+class JobsController < ApplicationController
+def saving(job)
+  key = "job:#{job[:source]}:#{job[:source_id]}"
+  $redis.multi do
+    $redis.set(key, job.to_json)
+    $redis.zadd('jobs', job[:created_at], key)
+  end
+end
+
+def get_latest_jobs
+  keys = redis.zrevrange('jobs', 0, 150)
+  jobs = redis.mget(*keys)
+  jobs.map do |j|
+    job = JSON.parse(j)
+    job['created_at'] = Time.at(job['created_at'])
+    job
+  end
+end

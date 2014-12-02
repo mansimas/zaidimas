@@ -1,0 +1,12 @@
+Sprint.Views.Inventories ||= {}
+class Sprint.Views.Inventories.NewView extends Backbone.View
+
+  items_name = null
+  create_item: (attributes) ->
+    this.collection = new Sprint.Collections.InventoriesCollection 
+    items_name = attributes.name
+    this.model = new this.collection.model(item: items_name, user_id: router.stats.models[0].attributes.user_id)
+    this.collection.create(this.model.toJSON())
+
+
+

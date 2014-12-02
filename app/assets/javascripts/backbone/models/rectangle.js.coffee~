@@ -1,0 +1,6 @@
+class Sprint.Models.Rectangle extends Backbone.Model
+  paramRoot: 'rectangle'
+
+class Sprint.Collections.RectanglesCollection extends Backbone.Collection
+  model: Sprint.Models.Rectangle
+  url: '/rectangles'

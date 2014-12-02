@@ -1,0 +1,12 @@
+<h1><center>Players list</center></h1>
+
+<table id="items-table">
+  <tr>
+    <th>Player</th>
+    <th>Level</th>
+    <th></th>
+    <th></th>
+  </tr>
+</table>
+
+<br/>

@@ -1,0 +1,14 @@
+<center>Inventory</center>
+
+<table id="inventories-table">
+  <tr>
+    <th>name </th>
+    <th>Lvl</th>
+    <th>Grade</th>
+    <th></th>
+  </tr>
+</table>
+
+<br/>
+
+

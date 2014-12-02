@@ -1,0 +1,71 @@
+
+
+<canvas id="maps" width="1100" height="380" style="position:absolute;"></canvas>
+<div style="float:right; padding-top:385px;">
+	<div id="inventories" style="border:1px solid black;height:180px;overflow:scroll;"></div>
+	<div id="monsters" style="border:1px solid black;height:150px;overflow:scroll;"></div>
+	<div id="shops" style="border:1px solid black;height:150px;overflow:scroll;"></div>
+  <div id="items" style="border:1px solid black;height:150px;overflow:scroll;"></div>
+</div>
+
+<div style="width:800px; padding-top:385px;">
+  <div style= "width: 600px; border:1px solid black; float:left;">
+    <div id="text1" style = "float:right; height:150px; overflow:scroll; width: 295px;"></div>
+    <div id="text"  style = "height:150px; overflow:scroll; width: 295px;"></div>
+  </div>
+  <div style="width:180px; height: 150px; float:right">
+    <div id="text2"></div>
+  </div>
+</div> 
+
+<div id="stats_extra" style="float:left; width:70%;"></div>
+<div id="stats" style="float:left; width:70%;padding-top:40px;"></div>
+
+<br><br>
+
+<br><br><br><br><br>
+
+<script type="text/javascript">
+$(function(){
+window.router = new Sprint.Routers.DropsRouter({
+items: <%= @items.to_json.html_safe %>, 
+stats: <%= @stats.to_json.html_safe%>, 
+monsters: <%= @monsters.to_json.html_safe%>, 
+allstats: <%= @allstats.to_json.html_safe%>, 
+inventories: <%= @inventories.to_json.html_safe %>, 
+shops: <%= @shops.to_json.html_safe %>,
+chats: <%= @chats.to_json.html_safe %>,
+
+                                               });
+Backbone.history.start();
+});
+</script>
+<div style="padding-top:300px; width:600px;">
+
+Drop chance of grade 1 monster. Grade2+ gives really higher dropchance. Grade 6+ drops almost always only items.<br>
+"medicine" Drop chance: 30%  ; 1 from 3<br>
+"gold" Drop chance: 21%  ; 1 from 5    <br>
+"<span style='font-weight:bold;color:gray;'>weak helmet</span>"   	Drop chance: 24.5%  ; 1 from 4<br>
+"<span style='font-weight:bold;color:green;'>normal helmet</span>"    	Drop chance: 20.43% ; 1 from 5<br>
+"<span style='font-weight:bold;color:blue;'>good helmet</span>"    		Drop chance: 3.39% ; 1 from 30<br>
+"<span style='font-weight:bold;color:purple;'>very good helmet</span>"          Drop chance: 0.563% ; 1 from 178<br>
+"<span style='font-weight:bold;color:red;'>super good helmet</span>"         Drop chance: 0.093% ; 1 from 1075<br>
+"<span style='font-weight:bold;color:#ec27e5;'>insane helmet</span>"             Drop chance: 0.0155% ; 1 from 6451<br>
+"<span style='font-weight:bold;color:orange;'>super insane helmet</span>"       Drop chance: 0.00305% ; 1 from 28571<br>
+<br><br>
+If your HP is less than 10%, you can't attack any monster.<br>
+After attacking you need wait 2 seconds before attacking again. <br>
+If you are using an item, you need to "Out" it to use another item.<br>
+You can use medicine every 5 seconds.<br>
+Your inventory is unlimited.<br>
+When you get enough exp press the level up button.<br>
+You can use item if your level is not lower than items level.<br>
+Every 10 levels you have new medicine with more HP regeneration.<br>
+Every 50 agility your crit chance is +1%<br>
+Every 500 agility your critical multiplier is +1<br>
+</div>
+<div>Hello, <%= current_user.username %>
+<% if user_signed_in? %>
+	<%= link_to "log out", destroy_user_session_path, method: :delete %>
+<% end %></div>
+

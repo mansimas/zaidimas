@@ -1,0 +1,6 @@
+<td><%= username %></td>
+<td><%= level %></td>
+<td><a href="#/<%= id %>/showItem">Show</td>
+<% if (router.stats.models[0].attributes.username == "adminas") { %>
+<td><a href="#/<%= id %>/attack" class="attack">Attack!</a></td>
+<% } %>

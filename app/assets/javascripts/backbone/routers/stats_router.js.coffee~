@@ -1,0 +1,15 @@
+class Sprint.Routers.StatsRouter extends Backbone.Router
+  initialize: (options) ->
+    @stats = new Sprint.Collections.StatsCollection()
+    @stats.reset options.stats
+    
+  routes:
+    "index"    : "index"
+    ".*"        : "index"
+
+  index: ->
+    @view = new Sprint.Views.Stats.IndexView(stats: @stats)
+    $("#stats").html(@view.render().el)
+
+
+

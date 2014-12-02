@@ -1,0 +1,6 @@
+class RemoveYposFromMonsters < ActiveRecord::Migration
+  def change
+    remove_column :monsters, :Ypos, :decimal,
+    remove_column :monsters, :Xpos, :decimal
+  end
+end

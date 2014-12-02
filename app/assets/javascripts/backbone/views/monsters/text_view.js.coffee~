@@ -1,0 +1,41 @@
+Sprint.Views.Monsters ||= {}
+
+class Sprint.Views.Monsters.TextView extends Backbone.View
+  template: JST["backbone/templates/monsters/text"]
+
+  initialize: ->
+
+  events:
+    "click .destroy" : "destroy"
+    "click .attack"  : "attack"
+
+  tagName: "tr"
+
+
+  attack: (e) ->
+    e.preventDefault()
+    player = router.stats.models[0].attributes.id
+    monsterarray = router.monsters.models
+    attacker_ids = []
+    for monster in monsterarray
+      attacker_ids.push monster.attributes.attacker
+    if player in attacker_ids
+      console.log("yra")
+    else
+      @model.set(attacker: player)
+      @model.save()
+      $("#text").html("sadadad")
+      @view = new Sprint.Views.Monsters.TextView()
+      $("#text").fadeIn(2000, @view.render().el) 
+
+
+  destroy: () ->
+    @model.destroy()
+    this.remove()
+
+    return false
+
+
+  render: ->
+    @$el.html(@template())
+    return this

@@ -1,0 +1,31 @@
+<h1>Listing stats</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Stat</th>
+      <th>Health</th>
+      <th>Strength</th>
+      <th>User</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @stats.each do |stat| %>
+      <tr>
+        <td><%= stat.stat %></td>
+        <td><%= stat.health %></td>
+        <td><%= stat.strength %></td>
+        <td><%= stat.user %></td>
+        <td><%= link_to 'Show', stat %></td>
+        <td><%= link_to 'Edit', edit_stat_path(stat) %></td>
+        <td><%= link_to 'Destroy', stat, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Stat', new_stat_path %>

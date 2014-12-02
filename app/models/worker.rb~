@@ -1,0 +1,3 @@
+class Worker < ActiveRecord::Base
+  HardWorker.perform
+end

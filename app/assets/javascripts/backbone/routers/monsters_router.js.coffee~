@@ -1,0 +1,30 @@
+class Sprint.Routers.MonstersRouter extends Backbone.Router
+  initialize: (options) ->
+    @monsters = new Sprint.Collections.MonstersCollection()
+    @monsters.reset options.monsters
+    
+  routes:
+    "new"      : "newMonsters"
+    "index"    : "index"
+    ":id/edit" : "edit"
+    ":id"      : "show"
+    ".*"        : "index"
+
+  index: ->
+    @view = new Sprint.Views.Monsters.IndexView(monsters: @monsters)
+    $("#monsters").html(@view.render().el)
+
+  newMonsters: ->
+    @view = new Sprint.Views.Monsters.NewView(collection: @monsters)
+    $("#monsters").html(@view.render().el)
+
+  show: (id) ->
+    monsters = @monsters.get(id)
+    @view = new Sprint.Views.Monsters.ShowView(model: monster)
+    $("#monsters").html(@view.render().el)
+
+  edit: (id) ->
+    monsters = @monsters.get(id)
+    @view = new Sprint.Views.Monsters.EditView(model: monster)
+    $("#monsters").html(@view.render().el)
+

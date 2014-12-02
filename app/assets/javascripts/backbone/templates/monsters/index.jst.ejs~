@@ -1,0 +1,33 @@
+<% if (router.stats.models[0].attributes.username == "adminas") { %>
+  <a href="#/newMonster">New Monster</a><br>
+  <a href="#/create_monster_1_5" class="create_monster_1_5"> create_monster_1_5</a><br>
+  <a href="#/create_monster_5_10" class="create_monster_5_10"> create_monster_10</a><br>
+  <a href="#/create_monster_10_15" class="create_monster_10_15"> create_monster_15</a><br>
+  <a href="#/create_monster_15_20" class="create_monster_15_20"> create_monster_20</a><br>
+  <a href="#/create_monster_20_25" class="create_monster_20_25"> create_monster_25</a><br>
+  <a href="#/create_monster_25_30" class="create_monster_25_30"> create_monster_30</a><br>
+  <a href="#/create_monster_30_35" class="create_monster_30_35"> create_monster_35</a><br>
+  <a href="#/create_monster_35_40" class="create_monster_35_40"> create_monster_40</a><br>
+  <a href="#/create_monster_40_45" class="create_monster_40_45"> create_monster_45</a><br>
+  <a href="#/create_monster_45_50" class="create_monster_45_50"> create_monster_50</a><br>
+<% } %>
+<b><center>Monsters list</center></b>
+
+<table id="monsters-table">
+  <tr>
+    <th>Name</th>
+    <th>Rang</th>
+    <th>Lvl</th>
+    <th>Hp</th>
+    <th>Exp</th>
+<% if (router.stats.models[0].attributes.username == "adminas") { %>
+    <th></th>
+    <th></th>
+<% } %>
+    <th></th>
+    <th></th>
+  </tr>
+</table>
+<br/>
+
+

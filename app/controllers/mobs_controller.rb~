@@ -1,0 +1,12 @@
+class Mob < ActiveRecord::Base
+  def mobs
+    m = $redis.smembers("mobs:#{self.id}")
+    Mob.where :id => m
+  end
+  def addmob(mob)
+    $redis.sadd("mobs:#{self.id}", mob.id)
+  end
+  def delmob(mob)
+    $redis.srem("mobs:#{self.id}", mobs.id)
+  end
+end

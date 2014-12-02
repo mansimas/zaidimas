@@ -1,0 +1,6 @@
+class AddYposToMonsters < ActiveRecord::Migration
+  def change
+    add_column :monsters, :Ypos, :integer,
+    add_column :monsters, :Xpos, :integer
+  end
+end

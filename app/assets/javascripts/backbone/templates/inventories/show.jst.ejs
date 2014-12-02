@@ -1,0 +1,20 @@
+<div style="width:300px;">
+<b>Name:</b><%= item %>
+<br>
+<table>
+<tr><td><b>Level: </b></td><td><%= level %></td><td></td><td></td><td><b>Health: </b></td><td><%= health %></td><td></td><td><b>Strength: </b></td><td><%= strength %></td></tr>
+<tr><td><b>Grade: </b></td><td><%= grade %></td><td></td><td></td><td><b>Agility: </b></td><td><%= agility %></td><td></td><td><b>Defence: </b></td><td><%= defence %></td></tr>
+</table>
+Price: <%= price %>
+Money: <%= money %>
+<br>
+
+<a href="#/index">Back</a><br>
+<% if (itemname !== "sold item") { %>
+  <a href="#/index" class="use">Use</a><br>
+  <a href="#/index" class="shop">Make a shop</a> price: <input type="text" name="price" id="price" value="<%= price %>"><br><br>
+<% } %>
+
+<a href="#/index" class="destroy">Sell (<%= level * money %>)</a>
+
+</div>

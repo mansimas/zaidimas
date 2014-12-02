@@ -1,0 +1,22 @@
+
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+
+development:
+adapter: sqlite3
+database: sprint_development
+pool: 5
+username: postgrepvz
+password:
+
+test:
+  <<: *default
+  database: postgrepvz_test
+
+production:
+  <<: *default
+  database: postgrepvz_production
+  username: postgrepvz
+  password: <%= ENV['POSTGREPVZ_DATABASE_PASSWORD'] %>

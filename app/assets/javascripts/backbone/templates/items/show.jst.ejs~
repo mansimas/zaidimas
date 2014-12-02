@@ -1,0 +1,25 @@
+<a href="#/index">Back</a>
+
+<table>
+  <tr>
+    <td>Name: </td><td><%= username %></td></tr><tr>
+    <td>Health: </td><td><%= total_health %></td></tr><tr>
+    <td>Strength: </td><td><%= total_strength %></td></tr><tr>
+    <td>Agility: </td><td><%= total_agility %></td>
+    <td>Monsters killed: </td><td><%= mobs_killed %></td>
+    <td>Damage: </td><td><%= min_dmg %>~<%= max_dmg %></td>
+    <td>Defence: </td><td><%= total_defence %></td>
+  </tr>
+</table>
+<table>
+  <tr>
+    <td>Item</td><td>lvl</td><td>Hp</td><td>Str</td><td>Agil</td><td>Def</td><td>Grd</td></tr><tr>
+    <td><%= weapon_name %><td><%= weapon_level %></td><td><%= weapon_health %></td><td><%= weapon_strength %></td><td><%= weapon_agility %></td><td><%= weapon_defence %></td><td><%= weapon_grade %></td></tr><tr>
+    <td><%= armor_name %><td><%= armor_level %></td><td><%= armor_health %></td><td><%= armor_strength %></td><td><%= armor_agility %></td><td><%= armor_defence %></td><td><%= armor_grade %></td></tr><tr>
+    <td><%= gloves_name %><td><%= gloves_level %></td><td><%= gloves_health %></td><td><%= gloves_strength %></td><td><%= gloves_agility %></td><td><%= gloves_defence %></td><td><%= gloves_grade %></td></tr><tr>
+    <td><%= shoes_name %><td><%= shoes_level %></td><td><%= shoes_health %></td><td><%= shoes_strength %></td><td><%= shoes_agility %></td><td><%= shoes_defence %></td><td><%= shoes_grade %></td></tr><tr>
+    <td><%= helmet_name %><td><%= helmet_level %></td><td><%= helmet_health %></td><td><%= helmet_strength %></td><td><%= helmet_agility %></td><td><%= helmet_defence %></td><td><%= helmet_grade %></td>
+  </tr>
+</table>
+
+<a href="#/index">Back</a>

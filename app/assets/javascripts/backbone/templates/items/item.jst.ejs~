@@ -1,0 +1,4 @@
+<td><%= username %></td>
+<td><%= level %></td>
+<td><a href="#/<%= id %>/showItem">Show</td>
+<td><a href="#/<%= id %>/attack" class="attack">Attack!</a></td>

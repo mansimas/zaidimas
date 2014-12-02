@@ -1,0 +1,28 @@
+<div id="pirmas"> <a href="#/index" class="use_medicine1" > </a></div><br>
+<% if (level > 9) { %>
+  <a href="#/index" class="use_medicine2" style="text-decoration:none;">small medicine 200Hp (<%= medicine2 %>) </a><br>
+<% } %>
+<% if (level > 19) { %>
+  <a href="#/index" class="use_medicine3" style="text-decoration:none;">medium medicine 300Hp (<%= medicine3 %>) </a><br>
+<% } %>
+<% if (level > 29) { %>
+  <a href="#/index" class="use_medicine4" style="text-decoration:none;">big medicine 400Hp (<%= medicine4 %>) </a><br>
+<% } %>
+<% if (level > 39) { %>
+  <a href="#/index" class="use_medicine5" style="text-decoration:none;">very big medicine 500Hp (<%= medicine5 %>) </a><br>
+<% } %>
+<% if (level > 49) { %>
+  <a href="#/index" class="use_medicine6" style="text-decoration:none;">huge medicine 600Hp (<%= medicine6 %>) </a><br>
+<% } %>
+<% if (level > 59) { %>
+  <a href="#/index" class="use_medicine7" style="text-decoration:none;">very huge medicine 700Hp (<%= medicine7 %>) </a><br>
+<% } %>
+<% if (level > 69) { %>
+  <a href="#/index" class="use_medicine8" style="text-decoration:none;">insane medicine 800Hp (<%= medicine8 %>) </a><br>
+<% } %>
+<% if (level > 79) { %>
+  <a href="#/index" class="use_medicine9" style="text-decoration:none;">very insane medicine 900Hp (<%= medicine9 %>) </a><br>
+<% } %>
+<% if (level > 89) { %>
+  <a href="#/index" class="use_medicine10" style="text-decoration:none;">super medicine 1000Hp (<%= medicine10 %>) </a><br>
+<% } %>

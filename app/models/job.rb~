@@ -1,0 +1,9 @@
+class Job
+def saving(job)
+  key = "job:#{job[:source]}:#{job[:source_id]}"
+  $redis.multi do
+    $redis.set(key, job.to_json)
+    $redis.zadd('jobs', job[:created_at], key)
+  end
+end
+end

@@ -1,0 +1,27 @@
+<% if (router.stats.models[0].attributes.username == "adminas") { %>
+  <a href="#/newMonster">New Monster</a><br>
+  <a href="#/create_monster_1_5" class="create_monster_1_5"> create_monster_1_5</a><br>
+  <a href="#/create_monster_5_10" class="create_monster_5_10"> create_monster_10</a><br>
+  <a href="#/create_monster_10_15" class="create_monster_10_15"> create_monster_15</a><br>
+  <a href="#/create_monster_15_20" class="create_monster_15_20"> create_monster_20</a><br>
+<% } %>
+<b><center>Monsters list</center></b>
+
+<table id="monsters-table">
+  <tr>
+    <th>Name</th>
+    <th>Rang</th>
+    <th>Lvl</th>
+    <th>Hp</th>
+    <th>Exp</th>
+<% if (router.stats.models[0].attributes.username == "adminas") { %>
+    <th></th>
+    <th></th>
+<% } %>
+    <th></th>
+    <th></th>
+  </tr>
+</table>
+<br/>
+
+

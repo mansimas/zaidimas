@@ -1,0 +1,9 @@
+class WebsocketRailsController < ApplicationController
+class ChatController < WebsocketRails::BaseController
+  def initialize_session
+    new_message = {:message => 'this is a message'}
+    send_message :event_name, new_message
+    controller_store[:message_count] = 0
+  end
+end
+end

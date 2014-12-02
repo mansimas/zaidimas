@@ -1,0 +1,143 @@
+Sprint.Views.Monsters ||= {}
+
+class Sprint.Views.Monsters.IndexView1 extends Backbone.View
+  template: JST["backbone/templates/monsters/index"]
+
+  initialize: () ->
+    @options.monsters.bind('reset', @addAll)
+
+  events:
+    "click .create_monster_1_5" : "create_monster_1_5"
+    "click .create_monster_5_10" : "create_monster_5_10"
+    "click .create_monster_10_15" : "create_monster_10_15"
+    "click .create_monster_15_20" : "create_monster_15_20"
+    "click .create_monster_20_25" : "create_monster_20_25"
+    "click .create_monster_25_30" : "create_monster_25_30"
+    "click .create_monster_30_35" : "create_monster_30_35"
+    "click .create_monster_35_40" : "create_monster_35_40"
+    "click .create_monster_40_45" : "create_monster_40_45"
+    "click .create_monster_45_50" : "create_monster_45_50"
+
+  create_monster_1_5: () ->
+    monster_level = 0
+    for count in [0...5]
+      monster_level = monster_level + 1
+      monster_grade = 0
+      for grade in [0...10]
+        monster_grade = monster_grade+1
+        this.collection = new Sprint.Collections.MonstersCollection
+        this.model = new this.collection.model(name: "monster"+monster_level, level: monster_level, rang: monster_grade, health: monster_level*50*monster_grade, experience: monster_level*monster_grade, money: monster_level*monster_grade, min_dmg: monster_level*monster_grade*5, max_dmg: monster_level*monster_grade*15, speed: 1000+monster_level*monster_grade, agility: monster_level*monster_grade*5, defence: monster_level*monster_grade*2, critical: monster_grade+monster_level, critical_multiplier: 2, strength: monster_level*monster_grade*5, attacker: 3  )
+        this.collection.create(this.model.toJSON())
+
+  create_monster_5_10: () ->
+    monster_level = 5
+    for count in [0...5]
+      monster_level = monster_level + 1
+      monster_grade = 0
+      for grade in [0...10]
+        monster_grade = monster_grade+1
+        this.collection = new Sprint.Collections.MonstersCollection
+        this.model = new this.collection.model(name: "monster"+monster_level, level: monster_level, rang: monster_grade, health: monster_level*50*monster_grade, experience: monster_level*monster_grade, money: monster_level*monster_grade, min_dmg: monster_level*monster_grade*5, max_dmg: monster_level*monster_grade*15, speed: 1000+monster_level*monster_grade, agility: monster_level*monster_grade*5, defence: monster_level*monster_grade*2, critical: monster_grade+monster_level, critical_multiplier: 2, strength: monster_level*monster_grade*5, attacker: 3  )
+        this.collection.create(this.model.toJSON())
+
+  create_monster_10_15: () ->
+    monster_level = 10
+    for count in [0...5]
+      monster_level = monster_level + 1
+      monster_grade = 0
+      for grade in [0...10]
+        monster_grade = monster_grade+1
+        this.collection = new Sprint.Collections.MonstersCollection
+        this.model = new this.collection.model(name: "monster"+monster_level, level: monster_level, rang: monster_grade, health: monster_level*50*monster_grade, experience: monster_level*monster_grade, money: monster_level*monster_grade, min_dmg: monster_level*monster_grade*5, max_dmg: monster_level*monster_grade*15, speed: 1000+monster_level*monster_grade, agility: monster_level*monster_grade*5, defence: monster_level*monster_grade*2, critical: monster_grade+monster_level, critical_multiplier: 2, strength: monster_level*monster_grade*5, attacker: 3  )
+        this.collection.create(this.model.toJSON())
+
+  create_monster_15_20: () ->
+    monster_level = 15
+    for count in [0...5]
+      monster_level = monster_level + 1
+      monster_grade = 0
+      for grade in [0...10]
+        monster_grade = monster_grade+1
+        this.collection = new Sprint.Collections.MonstersCollection
+        this.model = new this.collection.model(name: "monster"+monster_level, level: monster_level, rang: monster_grade, health: monster_level*50*monster_grade, experience: monster_level*monster_grade, money: monster_level*monster_grade, min_dmg: monster_level*monster_grade*5, max_dmg: monster_level*monster_grade*15, speed: 1000+monster_level*monster_grade, agility: monster_level*monster_grade*5, defence: monster_level*monster_grade*2, critical: monster_grade+monster_level, critical_multiplier: 2, strength: monster_level*monster_grade*5, attacker: 3  )
+        this.collection.create(this.model.toJSON())
+
+  create_monster_20_25: () ->
+    monster_level = 20
+    for count in [0...5]
+      monster_level = monster_level + 1
+      monster_grade = 0
+      for grade in [0...10]
+        monster_grade = monster_grade+1
+        this.collection = new Sprint.Collections.MonstersCollection
+        this.model = new this.collection.model(name: "monster"+monster_level, level: monster_level, rang: monster_grade, health: monster_level*50*monster_grade, experience: monster_level*monster_grade, money: monster_level*monster_grade, min_dmg: monster_level*monster_grade*5, max_dmg: monster_level*monster_grade*15, speed: 1000+monster_level*monster_grade, agility: monster_level*monster_grade*5, defence: monster_level*monster_grade*2, critical: monster_grade+monster_level, critical_multiplier: 2, strength: monster_level*monster_grade*5, attacker: 3  )
+        this.collection.create(this.model.toJSON())
+
+  create_monster_25_30: () ->
+    monster_level = 25
+    for count in [0...5]
+      monster_level = monster_level + 1
+      monster_grade = 0
+      for grade in [0...10]
+        monster_grade = monster_grade+1
+        this.collection = new Sprint.Collections.MonstersCollection
+        this.model = new this.collection.model(name: "monster"+monster_level, level: monster_level, rang: monster_grade, health: monster_level*50*monster_grade, experience: monster_level*monster_grade, money: monster_level*monster_grade, min_dmg: monster_level*monster_grade*5, max_dmg: monster_level*monster_grade*15, speed: 1000+monster_level*monster_grade, agility: monster_level*monster_grade*5, defence: monster_level*monster_grade*2, critical: monster_grade+monster_level, critical_multiplier: 2, strength: monster_level*monster_grade*5, attacker: 3  )
+        this.collection.create(this.model.toJSON())
+
+
+  create_monster_30_35: () ->
+    monster_level = 30
+    for count in [0...5]
+      monster_level = monster_level + 1
+      monster_grade = 0
+      for grade in [0...10]
+        monster_grade = monster_grade+1
+        this.collection = new Sprint.Collections.MonstersCollection
+        this.model = new this.collection.model(name: "monster"+monster_level, level: monster_level, rang: monster_grade, health: monster_level*50*monster_grade, experience: monster_level*monster_grade, money: monster_level*monster_grade, min_dmg: monster_level*monster_grade*5, max_dmg: monster_level*monster_grade*15, speed: 1000+monster_level*monster_grade, agility: monster_level*monster_grade*5, defence: monster_level*monster_grade*2, critical: monster_grade+monster_level, critical_multiplier: 2, strength: monster_level*monster_grade*5, attacker: 3  )
+        this.collection.create(this.model.toJSON())
+
+  create_monster_35_40: () ->
+    monster_level = 35
+    for count in [0...5]
+      monster_level = monster_level + 1
+      monster_grade = 0
+      for grade in [0...10]
+        monster_grade = monster_grade+1
+        this.collection = new Sprint.Collections.MonstersCollection
+        this.model = new this.collection.model(name: "monster"+monster_level, level: monster_level, rang: monster_grade, health: monster_level*50*monster_grade, experience: monster_level*monster_grade, money: monster_level*monster_grade, min_dmg: monster_level*monster_grade*5, max_dmg: monster_level*monster_grade*15, speed: 1000+monster_level*monster_grade, agility: monster_level*monster_grade*5, defence: monster_level*monster_grade*2, critical: monster_grade+monster_level, critical_multiplier: 2, strength: monster_level*monster_grade*5, attacker: 3  )
+        this.collection.create(this.model.toJSON())
+
+  create_monster_40_45: () ->
+    monster_level = 40
+    for count in [0...5]
+      monster_level = monster_level + 1
+      monster_grade = 0
+      for grade in [0...10]
+        monster_grade = monster_grade+1
+        this.collection = new Sprint.Collections.MonstersCollection
+        this.model = new this.collection.model(name: "monster"+monster_level, level: monster_level, rang: monster_grade, health: monster_level*50*monster_grade, experience: monster_level*monster_grade, money: monster_level*monster_grade, min_dmg: monster_level*monster_grade*5, max_dmg: monster_level*monster_grade*15, speed: 1000+monster_level*monster_grade, agility: monster_level*monster_grade*5, defence: monster_level*monster_grade*2, critical: monster_grade+monster_level, critical_multiplier: 2, strength: monster_level*monster_grade*5 , attacker: 3 )
+        this.collection.create(this.model.toJSON())
+
+  create_monster_45_50: () ->
+    monster_level = 45
+    for count in [0...5]
+      monster_level = monster_level + 1
+      monster_grade = 0
+      for grade in [0...10]
+        monster_grade = monster_grade+1
+        this.collection = new Sprint.Collections.MonstersCollection
+        this.model = new this.collection.model(name: "monster"+monster_level, level: monster_level, rang: monster_grade, health: monster_level*50*monster_grade, experience: monster_level*monster_grade, money: monster_level*monster_grade, min_dmg: monster_level*monster_grade*5, max_dmg: monster_level*monster_grade*15, speed: 1000+monster_level*monster_grade, agility: monster_level*monster_grade*5, defence: monster_level*monster_grade*2, critical: monster_grade+monster_level, critical_multiplier: 2, strength: monster_level*monster_grade*5 , attacker: 3 )
+        this.collection.create(this.model.toJSON())
+
+  addAll: () =>
+    @options.monsters.each(@addOne)
+
+  addOne: (monster) =>
+    view = new Sprint.Views.Monsters.MonsterView({model : monster})
+    @$("tbody").append(view.render().el)
+
+  render: =>
+    @$el.html(@template(monsters: @options.monsters.toJSON() ))
+    @addAll()
+
+    return this

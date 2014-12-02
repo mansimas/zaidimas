@@ -1,0 +1,76 @@
+<h1>New monster</h1>
+
+<form id="new-monster" name="monster">
+  <div class="field">
+    <label for="name"> name:</label>
+    <input type="text" name="name" id="name" value="<%= name %>" >
+  </div>
+
+  <div class="field">
+    <label for="level"> level:</label>
+    <input type="text" name="level" id="level" value="<%= level %>" >
+  </div>
+
+  <div class="field">
+    <label for="rang"> rang:</label>
+    <input type="text" name="rang" id="rang" value="<%= rang %>" >
+  </div>
+
+  <div class="field">
+    <label for="health"> health:</label>
+    <input type="text" name="health" id="health" value="<%= health %>" >
+  </div>
+
+  <div class="field">
+    <label for="experience"> experience:</label>
+    <input type="text" name="experience" id="experience" value="<%= experience %>" >
+  </div>
+
+  <div class="field">
+    <label for="money"> money:</label>
+    <input type="text" name="money" id="money" value="<%= money %>" >
+  </div>
+
+  <div class="field">
+    <label for="min_dmg"> minimum dmg:</label>
+    <input type="text" name="min_dmg" id="min_dmg" value="<%= min_dmg %>" >
+  </div>
+
+  <div class="field">
+    <label for="max_dmg"> maximum dmg:</label>
+    <input type="text" name="max_dmg" id="max_dmg" value="<%= max_dmg %>" >
+  </div>
+
+  <div class="field">
+    <label for="speed"> attack speed:</label>
+    <input type="text" name="speed" id="speed" value="<%= speed %>" >
+  </div>
+
+  <div class="field">
+    <label for="agility"> agility:</label>
+    <input type="text" name="agility" id="agility" value="<%= agility %>" >
+  </div>
+
+  <div class="field">
+    <label for="defence"> defence:</label>
+    <input type="text" name="defence" id="defence" value="<%= defence %>" >
+  </div>
+
+  <div class="field">
+    <label for="critical"> critical:</label>
+    <input type="text" name="critical" id="critical" value="<%= critical %>" >
+  </div>
+
+  <div class="field">
+    <label for="critical_multiplier"> critical multiplier:</label>
+    <input type="text" name="critical_multiplier" id="critical_multiplier" value="<%= critical_multiplier %>" >
+  </div>
+<% if (router.stats.models[0].attributes.username == "adminas") { %>
+  <div class="actions">
+    <input type="submit" value="Create Monster" />
+  </div>
+<% } %>
+
+</form>
+
+<a href="#/index">Back</a>

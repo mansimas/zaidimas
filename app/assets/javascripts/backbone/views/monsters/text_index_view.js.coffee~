@@ -1,0 +1,21 @@
+Sprint.Views.Monsters ||= {}
+
+class Sprint.Views.Monsters.TextIndexView extends Backbone.View
+  template: JST["backbone/templates/monsters/text_index"]
+
+  initialize: () ->
+    @options.monsters.bind('reset', @addAll)
+
+  addAll: () =>
+    @options.monsters.each(@addOne)
+
+  addOne: (text) =>
+    view = new Sprint.Views.Monsters.TextView({model : monster})
+    @$("tbody").append(view.render().el)
+
+  render: =>
+    @$el.html(@template(monsters: @options.monsters.toJSON() ))
+    @addAll()
+
+    return this
+

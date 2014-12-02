@@ -1,0 +1,11 @@
+class Sprint.Models.Chat extends Backbone.Model
+  paramRoot: 'chat'
+
+  defaults:
+    player_id: null
+    username: null
+    player_text: null
+
+class Sprint.Collections.ChatsCollection extends Backbone.Collection
+  model: Sprint.Models.Chat
+  url: '/chats'

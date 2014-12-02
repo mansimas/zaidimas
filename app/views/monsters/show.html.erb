@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @monster.name %>
+</p>
+
+<p>
+  <strong>Level:</strong>
+  <%= @monster.level %>
+</p>
+
+<p>
+  <strong>Health:</strong>
+  <%= @monster.health %>
+</p>
+
+<p>
+  <strong>Strength:</strong>
+  <%= @monster.strength %>
+</p>
+
+<p>
+  <strong>Experience:</strong>
+  <%= @monster.experience %>
+</p>
+
+<p>
+  <strong>Attacker:</strong>
+  <%= @monster.attacker %>
+</p>
+
+<%= link_to 'Edit', edit_monster_path(@monster) %> |
+<%= link_to 'Back', monsters_path %>

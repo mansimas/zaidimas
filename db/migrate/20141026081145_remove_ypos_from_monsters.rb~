@@ -1,0 +1,13 @@
+class RemoveYposFromMonsters < ActiveRecord::Migration
+  def self.up
+    change_table :monsters do |t|
+      t.change :Xpos, :decimal
+    end
+  end
+  def self.down
+    change_table :monsters do |t|
+      t.change :Xpos, :integer
+    end
+  end
+end
+

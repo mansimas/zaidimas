@@ -1,0 +1,16 @@
+Sprint.Views.Inventories ||= {}
+
+class Sprint.Views.Inventories.InventoryView extends Backbone.View
+  template: JST["backbone/templates/inventories/inventory"]
+
+
+  initialize: ->
+    @listenTo @model, 'change', @render
+    @listenTo @model, 'reset', @render
+
+  tagName: "tr"
+
+  render: ->
+    @$el.html(@template(@model.toJSON() ))
+    return this
+

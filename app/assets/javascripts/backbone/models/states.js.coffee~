@@ -1,0 +1,7 @@
+class Sprint.Models.Stat extends Backbone.Model
+
+class Sprint.Collections.StatsCollection extends Backbone.Collection
+  model: Sprint.Models.Stat
+  url: '/stats'
+
+

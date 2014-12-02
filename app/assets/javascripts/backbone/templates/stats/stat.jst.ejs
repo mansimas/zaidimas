@@ -1,0 +1,63 @@
+
+
+<div style="width: 100%;">
+
+
+<div style="float:left; width: 170px; position:overflow;">
+<table>
+  <tr><td><strong>Money: </strong></td><td> <%= money %></td></tr><tr>
+    <td>Points: </td><td><%= stat %></td></tr><tr>
+    <td>Health: </td><td><%= total_health %>
+<% if (router.stats.models[0].attributes.stat > 0) { %>
+<a href="#index" class="add_health"> Add health</a>
+<% } %></td></tr><tr>
+    <td>Strength: </td><td><%= total_strength %>
+<% if (router.stats.models[0].attributes.stat > 0) { %>
+<a href="#index" class="add_strength"> Add strength</a>
+<% } %></td></tr><tr>
+    <td>Agility: </td><td><%= total_agility %>
+<% if (router.stats.models[0].attributes.stat > 0) { %>
+<a href="#index" class="add_agility"> Add agility</a>
+<% } %></td> </tr>
+</table>
+</div>
+
+<div style="padding-left: 200px; width: 100%; position:overflow;">
+
+<div style="float:right; position:overflow;">
+<table>
+  <tr>
+    <td></td><td>Lvl</td><td>Hp</td><td>Str</td><td>Agil</td><td>Def</td><td>Grd</td><td></td><td></td></tr><tr>
+
+    <td><%= weapon_name %><td><%= weapon_level %></td><td><%= weapon_health %></td><td><%= weapon_strength %></td><td><%= weapon_agility %></td><td><%= weapon_defence %></td><td><%= weapon_grade %></td><td><a href="#index" class="remove_weapon">Out</a></td><td><a href="#index" class="upgrade_weapon">Upgrd <%= weapon_level*weapon_grade*weapon_grade*100 %></a></td></tr><tr>
+
+    <td><%= armor_name %><td><%= armor_level %></td><td><%= armor_health %></td><td><%= armor_strength %></td><td><%= armor_agility %></td><td><%= armor_defence %></td><td><%= armor_grade %></td><td><a href="#index" class="remove_armor">Out</a></td><td><a href="#index" class="upgrade_armor">Upgrd <%= armor_level*armor_grade*armor_grade*100 %></a></td></tr><tr>
+
+    <td><%= gloves_name %><td><%= gloves_level %></td><td><%= gloves_health %></td><td><%= gloves_strength %></td><td><%= gloves_agility %></td><td><%= gloves_defence %></td><td><%= gloves_grade %></td><td><a href="#index" class="remove_gloves">Out</a></td><td><a href="#index" class="upgrade_gloves">Upgrd <%= gloves_level*gloves_grade*gloves_grade*100 %> </a></td></tr><tr>
+
+    <td><%= shoes_name %><td><%= shoes_level %></td><td><%= shoes_health %></td><td><%= shoes_strength %></td><td><%= shoes_agility %></td><td><%= shoes_defence %></td><td><%= shoes_grade %></td><td><a href="#index" class="remove_shoes">Out</a></td><td><a href="#index" class="upgrade_shoes">Upgrd <%= shoes_level*shoes_grade*shoes_grade*100 %> </a></td></tr><tr>
+
+    <td><%= helmet_name %><td><%= helmet_level %></td><td><%= helmet_health %></td><td><%= helmet_strength %></td><td><%= helmet_agility %></td><td><%= helmet_defence %></td><td><%= helmet_grade %></td><td><a href="#index" class="remove_helmet">Out</a></td><td><a href="#index" class="upgrade_helmet">Upgrd <%= helmet_level*helmet_grade*helmet_grade*100 %></a></td></tr><tr>
+  </tr>
+</table>
+</div>
+
+<div>
+Max health: <%= max_hp %><br>
+Damage: <%= min_dmg %> ~ <%= max_dmg %><br>
+Attack speed: <%= speed %><br>
+Critical chance: <%= critical %>%<br>
+Critical multiplier: x<%= critical_multiplier %> dmg<br>
+To level up you need: <%= exp_left %> exp 
+<% if (experience >= exp_left) { %>
+<a href="#/index" class="level_up" style="font-weight:bold;color:red;">Level Up!</a>
+<% } %>
+<br>
+Killed monsters: <%= mobs_killed %><br>
+defence: <%= total_defence %><br>
+</div>
+</div>
+</div>
+
+
+

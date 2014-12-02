@@ -1,0 +1,35 @@
+<h1>Listing monsters</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Level</th>
+      <th>Health</th>
+      <th>Strength</th>
+      <th>Experience</th>
+      <th>Attacker</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @monsters.each do |monster| %>
+      <tr>
+        <td><%= monster.name %></td>
+        <td><%= monster.level %></td>
+        <td><%= monster.health %></td>
+        <td><%= monster.strength %></td>
+        <td><%= monster.experience %></td>
+        <td><%= monster.attacker %></td>
+        <td><%= link_to 'Show', monster %></td>
+        <td><%= link_to 'Edit', edit_monster_path(monster) %></td>
+        <td><%= link_to 'Destroy', monster, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Monster', new_monster_path %>

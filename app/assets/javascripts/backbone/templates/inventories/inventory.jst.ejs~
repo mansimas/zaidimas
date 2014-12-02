@@ -1,0 +1,5 @@
+<td><%= item %></td>
+<td><%= level %></td>
+<td><%= grade %></td>
+<td><a href="#/<%= id %>/showInventory">Show</td>
+

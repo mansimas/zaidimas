@@ -1,0 +1,10 @@
+<td><%= item %></td>
+<td><%= level %></td>
+<td><%= grade %></td>
+<td><a href="#/<%= id %>/showInventory">Show</td>
+<td><a href="#/index" class="destroy">Sell (<%= level * money %>)</a></td>
+<% if (itemname !== "sold item") { %>
+<td><a href="#/index" class="use">Use</a></td>
+<% } %>
+
+
