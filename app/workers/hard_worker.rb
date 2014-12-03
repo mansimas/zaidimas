@@ -3,7 +3,7 @@ class HardWorker
   require 'sidekiq/api'
   
   def perform
-    self.recalculate
+    self.reset_database
   end
   
   def reset_database
