@@ -3,12 +3,13 @@ class HardWorker
   require 'sidekiq/api'
   
   def perform
-    self.recalculate
+    sleep 5
+    self.reset_database
   end
   
   def reset_database
     $redis.pipelined do
-      (0...20).each do |mob_count|
+      (0...5).each do |mob_count|
         $redis.rpush "mobs", mob_count
         $redis.hset "mobs:#{mob_count}", 'id', "#{mob_count}"
         $redis.hset "mobs:#{mob_count}", 'xpos', 150
