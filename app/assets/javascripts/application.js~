@@ -21,5 +21,5 @@
 //= require websocket_rails/main
 //= require_tree .
 
-var dispatcher = new WebSocketRails('www.gamegame.herokuapp.com:3000/websocket' || '0.0.0.0:3000/websocket');
+var dispatcher = new WebSocketRails('gamegame.herokuapp.com/websocket' || '0.0.0.0:3000/websocket');
 var channel = dispatcher.subscribe('channel_name');
