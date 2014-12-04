@@ -30,7 +30,7 @@ WebsocketRails.setup do |config|
   # Will not be used unless standalone or synchronization mode
   # is enabled.
   uri = URI.parse(ENV["REDISTOGO_URL"] || "redis://127.0.0.1")
-  config.redis_options = {:host => uri.host, :port => uri.port || 6379}
+  config.redis_options = {ENV[:host => uri.host, :port => uri.port, :user => 'redistogo', :password => '75908f5f83196037dfc076d59f64f4eb'] || :host => 'localhost', :port => 6379}
 
 
   # By default, all subscribers in to a channel will be removed
