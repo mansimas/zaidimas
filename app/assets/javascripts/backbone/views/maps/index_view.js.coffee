@@ -14,6 +14,7 @@ class Sprint.Views.Maps.IndexView extends Backbone.View
     self = this
     channel.bind('event_name', (data) ->
       self.get_all_mobs(data))					# websocket
+    console.log(dispatcher)
     if move_on_count is 0
       @addAll()
       @game_init_function()
@@ -24,6 +25,7 @@ class Sprint.Views.Maps.IndexView extends Backbone.View
     @move_on()
     
   get_all_mobs: (mob) ->
+    console.log('mob')
     mob_list[mob.id] = mob
     console.log('mob updated')
 

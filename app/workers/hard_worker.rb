@@ -3,7 +3,6 @@ class HardWorker
   require 'sidekiq/api'
   
   def perform
-    sleep 5
     self.recalculate
   end
   
@@ -20,6 +19,15 @@ class HardWorker
         $redis.hset "mobs:#{mob_count}", 'health', "#{(mob_count*25)}"
       end
     end
+  end
+  
+  def goga
+    puts WebsocketRails
+    mob = {id: 1, Xpos: 150, Ypos: 150, 
+        XposDest: 170, YposDest: 170, level: 1, health: 25}
+    WebsocketRails[:channel_name].trigger(:event_name, mob)
+    puts "goga ended"
+    
   end
 
   def recalculate

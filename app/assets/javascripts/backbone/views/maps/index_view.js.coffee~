@@ -24,6 +24,7 @@ class Sprint.Views.Maps.IndexView extends Backbone.View
     @move_on()
     
   get_all_mobs: (mob) ->
+    console.log('mob')
     mob_list[mob.id] = mob
     console.log('mob updated')
 
