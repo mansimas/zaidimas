@@ -94,7 +94,7 @@ class Sprint.Views.Maps.IndexView extends Backbone.View
    #filter_strength = 20
    fps = parseInt(1000 / (this_loop - last_loop))
    #frame_time = (this_loop-last_loop) / filter_strength
-   console.log(frame_time)
+   console.log(fps)
    last_loop = this_loop
    @canvas()
    @player_movement()
@@ -358,7 +358,7 @@ class Sprint.Views.Maps.IndexView extends Backbone.View
     
   mob_start_moving: (mob) ->
     id = mob.id
-    mspeed = 0.25
+    mspeed = 0.25*fps/20
     Ypos = mob.Ypos
     Xpos = mob.Xpos
     mdiffY = mob.YposDest-Ypos
