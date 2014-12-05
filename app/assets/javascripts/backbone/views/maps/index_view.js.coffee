@@ -87,14 +87,28 @@ class Sprint.Views.Maps.IndexView extends Backbone.View
     move_on_count++
     self = this
     timer 50, ()-> self.checking_or_moved()
-    timer 1000, ()-> self.Mob_speed_to_FPS
+    timer 1000, ()-> self.mob_speed_to_FPS
     level = router.stats.models[0].attributes.level
     
-  Mob_speed_to_FPS: ->
+  mob_speed_to_FPS: ->
    this_loop = new Date
    fps = parseInt(20000 / (this_loop - last_loop))+1
    mspeed = 0.25*(fps/20).toFixed(2)
    last_loop = this_loop
+   
+  target_line: (width, height, rgba, mob, unit) ->
+    ctx = @ctx
+    ctx.beginPath()
+    ctx.lineWidth = 0.5
+    ctx.lineCap = 'round'
+    ctx.strokeStyle = rgba
+    ctx.moveTo(mob.Xpos+width/2,mob.Ypos+height/2)
+    ctx.lineTo(mob.XposDest+width/2,mob.YposDest+height/2)
+    ctx.stroke()
+    ctx.beginPath()
+    ctx.strokeStyle = "red"
+    ctx.arc(mob.XposDest+width/2,mob.YposDest+height/2,2,0,2*Math.PI)   
+    ctx.stroke()
     
   checking_or_moved: ->
    @canvas()
@@ -140,6 +154,10 @@ class Sprint.Views.Maps.IndexView extends Backbone.View
       ctx.font = '7px sans-serif'
       ctx.textBaseline = 'top'
       ctx.fillText(mob.level, MobXpos+enemy_width+2, MobYpos)
+      
+      @target_line(enemy_width, enemy_height, "rgba(32, 45, 21, 0.2)", mob, "mob")
+
+      
       #enemy_count.push Xpos:MobXpos, Ypos:MobYpos, cid:mob.id
       if mob.Xpos is mob.XposDest and mob.Ypos is mob.YposDest
         #console.log('mob reached target, waiting for new target from background')
@@ -161,6 +179,9 @@ class Sprint.Views.Maps.IndexView extends Backbone.View
     @ctx.font = '7px sans-serif'
     @ctx.textBaseline = 'top'
     @ctx.fillText(level, this_position.mouseX+7, this_position.mouseY)
+    player_object = {Xpos: this_position.mouseX-player_width/2, Ypos: this_position.mouseY-player_height/2,
+    XposDest: target_position.mouseX-player_width/2, YposDest: target_position.mouseY-player_height/2}
+    @target_line(player_width, player_height, "red", player_object, "player")
         
     if move_allowed is 1
       @ctx.canvas.onmousemove = (evt) ->										# On every mouse move get the mouse position in map
@@ -283,9 +304,9 @@ class Sprint.Views.Maps.IndexView extends Backbone.View
     @ctx.fillStyle="red"
     @ctx.fillRect(1075,335, 20, -(330*router.stats.models[0].attributes.monster_hp/router.stats.models[0].attributes.monster_max_hp))	
 
-    @ctx.fillStyle="black"
+    @ctx.strokeStyle="black"
     @ctx.strokeRect(5,335, 20, -330)
-    @ctx.fillStyle="black"
+    @ctx.strokeStyle="black"
     @ctx.strokeRect(1075,335, 20, -330)    
 
     @ctx.fillStyle = '#000000'
@@ -360,7 +381,6 @@ class Sprint.Views.Maps.IndexView extends Backbone.View
 
   mob_start_moving: (mob) ->
     id = mob.id
-    console.log(mspeed)
     Ypos = mob.Ypos
     Xpos = mob.Xpos
     mdiffY = mob.YposDest-Ypos
