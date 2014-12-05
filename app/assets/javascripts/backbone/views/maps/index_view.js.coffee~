@@ -80,22 +80,23 @@ class Sprint.Views.Maps.IndexView extends Backbone.View
   spawn_center = spawnX: 500, spawnY: 250
   attacking_allowed = true
   level = 0
+  mspeed = 0.25
 
   
   move_on: ->
     move_on_count++
     self = this
     timer 50, ()-> self.checking_or_moved()
-    #timer 5000, ()-> console.log(mob_list)
+    timer 1000, ()-> self.Mob_speed_to_FPS
     level = router.stats.models[0].attributes.level
     
-  checking_or_moved: ->
+  Mob_speed_to_FPS: ->
    this_loop = new Date
-   #filter_strength = 20
-   fps = parseInt(1000 / (this_loop - last_loop))
-   #frame_time = (this_loop-last_loop) / filter_strength
-   console.log(fps)
+   fps = parseInt(20000 / (this_loop - last_loop))+1
+   mspeed = 0.25*(fps/20).toFixed(2)
    last_loop = this_loop
+    
+  checking_or_moved: ->
    @canvas()
    @player_movement()
     
@@ -356,9 +357,9 @@ class Sprint.Views.Maps.IndexView extends Backbone.View
         this_position = mouseX: this_position.mouseX, mouseY: this_position.mouseY
     alfas = "true"		
     
+
   mob_start_moving: (mob) ->
     id = mob.id
-    mspeed = 0.25*fps/20
     Ypos = mob.Ypos
     Xpos = mob.Xpos
     mdiffY = mob.YposDest-Ypos
