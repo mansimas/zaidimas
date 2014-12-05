@@ -35,7 +35,6 @@ class HardWorker
       level = ($redis.hget "mobs:#{monster}", 'level').to_i
       health = ($redis.hget "mobs:#{monster}", 'health').to_i
       @monster_object[id] = {id: id, xpos: xpos, ypos: ypos, xposDest: xposDest, yposDest: yposDest, level:level, health:health}
-      WebsocketRails[:channel_name].trigger(:event_name, @monster_object[id])
     end  
     
     def check_monsters
@@ -51,7 +50,6 @@ class HardWorker
             start_moving(monster)
           end
         end
-        puts (number)
         sleep 0.1
       end
     end

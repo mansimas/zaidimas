@@ -51,7 +51,6 @@ class HardWorker
             start_moving(monster)
           end
         end
-        puts (number)
         sleep 0.1
       end
     end

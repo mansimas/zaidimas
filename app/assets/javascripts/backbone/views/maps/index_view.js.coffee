@@ -14,7 +14,6 @@ class Sprint.Views.Maps.IndexView extends Backbone.View
     self = this
     channel.bind('event_name', (data) ->
       self.get_all_mobs(data))					# websocket
-    console.log(dispatcher)
     if move_on_count is 0
       @addAll()
       @game_init_function()
@@ -25,16 +24,11 @@ class Sprint.Views.Maps.IndexView extends Backbone.View
     @move_on()
     
   get_all_mobs: (mob) ->
-    mob_list[mob.id] = mob
-    console.log('mob updated')
-
-  checking_or_moved: ->
-   @canvas()
-   @player_movement()
+    mob_list[mob.id] = mob							# websocket
     
   fetch_mob: ()->
-    for mob in mob_list
-      console.log(mob)
+    #for mob in mob_list
+      #console.log(mob)
     #@addAll()			# need only on init
     #@save_mobs_position()
     #@receiving_attributes_from_database()
@@ -45,6 +39,8 @@ class Sprint.Views.Maps.IndexView extends Backbone.View
   addOne: (monster) =>
     mob_list[monster.attributes.id] = monster.attributes
     
+  fps = 40
+  last_loop = new Date
   mob_list = []
   mobbys = []
   monster_Xspawn_center = 1: 100, 2: 300, 3: 500, 4: 700, 5: 900, 6: 150, 7: 350, 8: 550, 9: 750, 10: 950
@@ -60,7 +56,7 @@ class Sprint.Views.Maps.IndexView extends Backbone.View
   speed = 1
   move_on = 1
   alfas = "true"
-  checked_monster = cid: 0
+  checked_monster = cid: -1
   player_width = 10
   player_height = 10
   enemy_width = 20
@@ -84,46 +80,30 @@ class Sprint.Views.Maps.IndexView extends Backbone.View
   spawn_center = spawnX: 500, spawnY: 250
   attacking_allowed = true
   level = 0
-  
+
   
   move_on: ->
     move_on_count++
     self = this
-    timer 100, ()-> self.checking_or_moved()
-    #timer 5000, ()-> self.fetch_mob()
+    timer 50, ()-> self.checking_or_moved()
+    #timer 5000, ()-> console.log(mob_list)
     level = router.stats.models[0].attributes.level
+    
+  checking_or_moved: ->
+   this_loop = new Date
+   #filter_strength = 20
+   fps = parseInt(1000 / (this_loop - last_loop))
+   #frame_time = (this_loop-last_loop) / filter_strength
+   console.log(fps)
+   last_loop = this_loop
+   @canvas()
+   @player_movement()
     
   canvas: ->
     ctx = @ctx
     rect = @ca.getBoundingClientRect()
     @ctx.clearRect(rect.top, rect.left, 1500, 500)						# reset the canvas    
-    @ctx.fillStyle="red"
-    @ctx.fillRect(5,335, 20, -(330*router.stats.models[0].attributes.player_hp/router.stats.models[0].attributes.max_hp))
-    @ctx.fillStyle="red"
-    @ctx.fillRect(1075,335, 20, -(330*router.stats.models[0].attributes.monster_hp/router.stats.models[0].attributes.monster_max_hp))	
-
-    @ctx.fillStyle="black"
-    @ctx.strokeRect(5,335, 20, -330)
-    @ctx.fillStyle="black"
-    @ctx.strokeRect(1075,335, 20, -330)    
-
-    @ctx.fillStyle = '#000000'
-    @ctx.font = '20px sans-serif'
-    @ctx.textBaseline = 'top'
-    @ctx.fillText("Your HP", 5, 340)    
-    @ctx.fillStyle = '#000000'
-    @ctx.font = '20px sans-serif'
-    @ctx.textBaseline = 'top'
-    @ctx.fillText(router.stats.models[0].attributes.player_hp, 5, 360) 
-    
-    @ctx.fillStyle = '#000000'
-    @ctx.font = '20px sans-serif'
-    @ctx.textBaseline = 'top'
-    @ctx.fillText("Enemy HP", 985, 340)
-    @ctx.fillStyle = '#000000'
-    @ctx.font = '20px sans-serif'
-    @ctx.textBaseline = 'top'
-    @ctx.fillText(router.stats.models[0].attributes.monster_hp, 985, 360) 
+    @writing_levels_on_objects_and_health_bars()
     @recalculatePlayerTarget()			
     for mob in mob_list
       MobXpos = mob.Xpos
@@ -161,7 +141,7 @@ class Sprint.Views.Maps.IndexView extends Backbone.View
       ctx.fillText(mob.level, MobXpos+enemy_width+2, MobYpos)
       #enemy_count.push Xpos:MobXpos, Ypos:MobYpos, cid:mob.id
       if mob.Xpos is mob.XposDest and mob.Ypos is mob.YposDest
-        console.log('mob reached target, waiting for new target from background')
+        #console.log('mob reached target, waiting for new target from background')
       #else if attacking_allowed is false and attacking is mob.id
         #
       #else if attacking_allowed is true and attacking is mob.id
@@ -214,130 +194,6 @@ class Sprint.Views.Maps.IndexView extends Backbone.View
           checked_monster = cid: -1											# Dont attack any monsters you did before
           return			
 
-  calculating_destination: ->
-    last_position = this_position													# restore the new position of player
-    if diffX > 0															
-      if diffY > 0
-        if diffX > diffY
-          this_position = mouseX: this_position.mouseX+speed, mouseY: this_position.mouseY+diffY/diffX*speed
-        if diffX < diffY
-          this_position = mouseX: this_position.mouseX+diffX/diffY*speed, mouseY: this_position.mouseY+speed
-        if diffX is diffY
-          this_position = mouseX: this_position.mouseX+speed, mouseY: this_position.mouseY+speed
-      if diffY < 0
-        if diffX > -diffY
-          this_position = mouseX: this_position.mouseX+speed, mouseY: this_position.mouseY+diffY/diffX*speed
-        if diffX < -diffY
-          this_position = mouseX: this_position.mouseX+diffX/(-diffY)*speed, mouseY: this_position.mouseY-speed
-        if diffX is -diffY
-          this_position = mouseX: this_position.mouseX+speed, mouseY: this_position.mouseY-speed
-          
-    if diffX < 0
-      if diffY > 0
-        if -diffX > diffY
-          this_position = mouseX: this_position.mouseX-speed, mouseY: this_position.mouseY+diffY/(-diffX)*speed
-        if -diffX < diffY
-          this_position = mouseX: this_position.mouseX+diffX/diffY*speed, mouseY: this_position.mouseY+speed
-        if -diffX is diffY
-          this_position = mouseX: this_position.mouseX-speed, mouseY: this_position.mouseY+speed
-      if diffY < 0
-        if -diffX > -diffY
-          this_position = mouseX: this_position.mouseX-speed, mouseY: this_position.mouseY-(-diffY)/(-diffX)*speed
-        if -diffX < -diffY
-          this_position = mouseX: this_position.mouseX-(-diffX)/(-diffY)*speed, mouseY: this_position.mouseY-speed
-        if -diffX is -diffY
-          this_position = mouseX: this_position.mouseX-speed, mouseY: this_position.mouseY-speed
-          
-    if diffX is 0
-      if diffY > 0
-        this_position = mouseX: this_position.mouseX, mouseY: this_position.mouseY+speed
-      if diffY < 0
-        this_position = mouseX: this_position.mouseX, mouseY: this_position.mouseY-speed
-      if diffY is 0
-        this_position = mouseX: this_position.mouseX, mouseY: this_position.mouseY
-        
-    if diffY is 0
-      if diffX > 0
-        this_position = mouseX: this_position.mouseX+speed, mouseY: this_position.mouseY
-      if diffX < 0
-        this_position = mouseX: this_position.mouseX-speed, mouseY: this_position.mouseY
-      if diffX is 0
-        this_position = mouseX: this_position.mouseX, mouseY: this_position.mouseY
-    alfas = "true"		
-    
-  mob_start_moving: (mob) ->
-    id = mob.id
-    mspeed = 0.5
-    Ypos = mob.Ypos
-    Xpos = mob.Xpos
-    mdiffY = mob.YposDest-Ypos
-    mdiffX = mob.XposDest-Xpos
-    if mdiffX > 0															
-      if mdiffY > 0
-        if mdiffX > mdiffY
-          mob_list[id].Xpos = Xpos+mspeed
-          mob_list[id].Ypos = Ypos+mdiffY/mdiffX*mspeed
-        if mdiffX < mdiffY
-          mob_list[id].Xpos = Xpos+mdiffX/mdiffY*mspeed
-          mob_list[id].Ypos = Ypos+mspeed
-        if mdiffX is mdiffY
-          mob_list[id].Xpos = Xpos+mspeed
-          mob_list[id].Ypos = Ypos+mspeed
-      if mdiffY < 0
-        if mdiffX > -mdiffY
-          mob_list[id].Xpos = Xpos+mspeed
-          mob_list[id].Ypos = Ypos+mdiffY/mdiffX*mspeed
-        if mdiffX < -mdiffY
-          mob_list[id].Xpos = Xpos+mdiffX/(-mdiffY)*mspeed
-          mob_list[id].Ypos = Ypos-mspeed
-        if mdiffX is -mdiffY
-          mob_list[id].Xpos = Xpos+mspeed
-          mob_list[id].Ypos = Ypos-mspeed
-          
-    if mdiffX < 0
-      if mdiffY > 0
-        if -mdiffX > mdiffY
-          mob_list[id].Xpos = Xpos-mspeed
-          mob_list[id].Ypos = Ypos+mdiffY/(-mdiffX)*mspeed
-        if -mdiffX < mdiffY
-          mob_list[id].Xpos = Xpos+mdiffX/mdiffY*mspeed
-          mob_list[id].Ypos = Ypos+mspeed
-        if -mdiffX is mdiffY
-          mob_list[id].Xpos = Xpos-mspeed
-          mob_list[id].Ypos = Ypos+mspeed
-      if mdiffY < 0
-        if -mdiffX > -mdiffY
-          mob_list[id].Xpos = Xpos-mspeed
-          mob_list[id].Ypos = Ypos-(-mdiffY)/(-mdiffX)*mspeed
-        if -mdiffX < -mdiffY
-          mob_list[id].Xpos = Xpos-(-mdiffX)/(-mdiffY)*mspeed
-          mob_list[id].Ypos = Ypos-mspeed
-        if -mdiffX is -mdiffY
-          mob_list[id].Xpos = Xpos-mspeed
-          mob_list[id].Ypos = Ypos-mspeed
-          
-    if mdiffX is 0
-      if mdiffY > 0
-        mob_list[id].Xpos = Xpos
-        mob_list[id].Ypos = Ypos+mspeed
-      if mdiffY < 0
-        mob_list[id].Xpos = Xpos
-        mob_list[id].Ypos = Ypos-mspeed
-      if mdiffY is 0
-        mob_list[id].Xpos = Xpos
-        mob_list[id].Ypos = Ypos
-        
-    if mdiffY is 0
-      if mdiffX > 0
-        mob_list[id].Xpos = Xpos+mspeed
-        mob_list[id].Ypos = Ypos
-      if mdiffX < 0
-        mob_list[id].Xpos = Xpos-mspeed
-        mob_list[id].Ypos = Ypos
-      if mdiffX is 0
-        mob_list[id].Xpos = Xpos
-        mob_list[id].Ypos = Ypos
-    
   player_movement: ->
     self = this   
     if router.stats.models[0].attributes.attack_allow is true
@@ -411,6 +267,168 @@ class Sprint.Views.Maps.IndexView extends Backbone.View
     [lower, upper] = [upper, lower] if lower > upper        # Lower must be less then upper
     Math.floor(Math.random() * (upper - lower + 1) + lower) # Last statement is a return value
       
+      
+
+
+
+
+
+
+
+
+  writing_levels_on_objects_and_health_bars: ->  
+    @ctx.fillStyle="red"
+    @ctx.fillRect(5,335, 20, -(330*router.stats.models[0].attributes.player_hp/router.stats.models[0].attributes.max_hp))
+    @ctx.fillStyle="red"
+    @ctx.fillRect(1075,335, 20, -(330*router.stats.models[0].attributes.monster_hp/router.stats.models[0].attributes.monster_max_hp))	
+
+    @ctx.fillStyle="black"
+    @ctx.strokeRect(5,335, 20, -330)
+    @ctx.fillStyle="black"
+    @ctx.strokeRect(1075,335, 20, -330)    
+
+    @ctx.fillStyle = '#000000'
+    @ctx.font = '20px sans-serif'
+    @ctx.textBaseline = 'top'
+    @ctx.fillText("Your HP", 5, 340)    
+    @ctx.fillStyle = '#000000'
+    @ctx.font = '20px sans-serif'
+    @ctx.textBaseline = 'top'
+    @ctx.fillText(router.stats.models[0].attributes.player_hp, 5, 360) 
+    
+    @ctx.fillStyle = '#000000'
+    @ctx.font = '20px sans-serif'
+    @ctx.textBaseline = 'top'
+    @ctx.fillText("Enemy HP", 985, 340)
+    @ctx.fillStyle = '#000000'
+    @ctx.font = '20px sans-serif'
+    @ctx.textBaseline = 'top'
+    @ctx.fillText(router.stats.models[0].attributes.monster_hp, 985, 360)  
+      
+  calculating_destination: ->
+    last_position = this_position													# restore the new position of player
+    if diffX > 0															
+      if diffY > 0
+        if diffX > diffY
+          this_position = mouseX: this_position.mouseX+speed, mouseY: this_position.mouseY+diffY/diffX*speed
+        if diffX < diffY
+          this_position = mouseX: this_position.mouseX+diffX/diffY*speed, mouseY: this_position.mouseY+speed
+        if diffX is diffY
+          this_position = mouseX: this_position.mouseX+speed, mouseY: this_position.mouseY+speed
+      if diffY < 0
+        if diffX > -diffY
+          this_position = mouseX: this_position.mouseX+speed, mouseY: this_position.mouseY+diffY/diffX*speed
+        if diffX < -diffY
+          this_position = mouseX: this_position.mouseX+diffX/(-diffY)*speed, mouseY: this_position.mouseY-speed
+        if diffX is -diffY
+          this_position = mouseX: this_position.mouseX+speed, mouseY: this_position.mouseY-speed
+          
+    if diffX < 0
+      if diffY > 0
+        if -diffX > diffY
+          this_position = mouseX: this_position.mouseX-speed, mouseY: this_position.mouseY+diffY/(-diffX)*speed
+        if -diffX < diffY
+          this_position = mouseX: this_position.mouseX+diffX/diffY*speed, mouseY: this_position.mouseY+speed
+        if -diffX is diffY
+          this_position = mouseX: this_position.mouseX-speed, mouseY: this_position.mouseY+speed
+      if diffY < 0
+        if -diffX > -diffY
+          this_position = mouseX: this_position.mouseX-speed, mouseY: this_position.mouseY-(-diffY)/(-diffX)*speed
+        if -diffX < -diffY
+          this_position = mouseX: this_position.mouseX-(-diffX)/(-diffY)*speed, mouseY: this_position.mouseY-speed
+        if -diffX is -diffY
+          this_position = mouseX: this_position.mouseX-speed, mouseY: this_position.mouseY-speed
+          
+    if diffX is 0
+      if diffY > 0
+        this_position = mouseX: this_position.mouseX, mouseY: this_position.mouseY+speed
+      if diffY < 0
+        this_position = mouseX: this_position.mouseX, mouseY: this_position.mouseY-speed
+      if diffY is 0
+        this_position = mouseX: this_position.mouseX, mouseY: this_position.mouseY
+        
+    if diffY is 0
+      if diffX > 0
+        this_position = mouseX: this_position.mouseX+speed, mouseY: this_position.mouseY
+      if diffX < 0
+        this_position = mouseX: this_position.mouseX-speed, mouseY: this_position.mouseY
+      if diffX is 0
+        this_position = mouseX: this_position.mouseX, mouseY: this_position.mouseY
+    alfas = "true"		
+    
+  mob_start_moving: (mob) ->
+    id = mob.id
+    mspeed = 0.25
+    Ypos = mob.Ypos
+    Xpos = mob.Xpos
+    mdiffY = mob.YposDest-Ypos
+    mdiffX = mob.XposDest-Xpos
+    if mdiffX > 0															
+      if mdiffY > 0
+        if mdiffX > mdiffY
+          mob_list[id].Xpos = Xpos+mspeed
+          mob_list[id].Ypos = Ypos+mdiffY/mdiffX*mspeed
+        if mdiffX < mdiffY
+          mob_list[id].Xpos = Xpos+mdiffX/mdiffY*mspeed
+          mob_list[id].Ypos = Ypos+mspeed
+        if mdiffX is mdiffY
+          mob_list[id].Xpos = Xpos+mspeed
+          mob_list[id].Ypos = Ypos+mspeed
+      if mdiffY < 0
+        if mdiffX > -mdiffY
+          mob_list[id].Xpos = Xpos+mspeed
+          mob_list[id].Ypos = Ypos+mdiffY/mdiffX*mspeed
+        if mdiffX < -mdiffY
+          mob_list[id].Xpos = Xpos+mdiffX/(-mdiffY)*mspeed
+          mob_list[id].Ypos = Ypos-mspeed
+        if mdiffX is -mdiffY
+          mob_list[id].Xpos = Xpos+mspeed
+          mob_list[id].Ypos = Ypos-mspeed
+          
+    if mdiffX < 0
+      if mdiffY > 0
+        if -mdiffX > mdiffY
+          mob_list[id].Xpos = Xpos-mspeed
+          mob_list[id].Ypos = Ypos+mdiffY/(-mdiffX)*mspeed
+        if -mdiffX < mdiffY
+          mob_list[id].Xpos = Xpos+mdiffX/mdiffY*mspeed
+          mob_list[id].Ypos = Ypos+mspeed
+        if -mdiffX is mdiffY
+          mob_list[id].Xpos = Xpos-mspeed
+          mob_list[id].Ypos = Ypos+mspeed
+      if mdiffY < 0
+        if -mdiffX > -mdiffY
+          mob_list[id].Xpos = Xpos-mspeed
+          mob_list[id].Ypos = Ypos-(-mdiffY)/(-mdiffX)*mspeed
+        if -mdiffX < -mdiffY
+          mob_list[id].Xpos = Xpos-(-mdiffX)/(-mdiffY)*mspeed
+          mob_list[id].Ypos = Ypos-mspeed
+        if -mdiffX is -mdiffY
+          mob_list[id].Xpos = Xpos-mspeed
+          mob_list[id].Ypos = Ypos-mspeed
+          
+    if mdiffX is 0
+      if mdiffY > 0
+        mob_list[id].Xpos = Xpos
+        mob_list[id].Ypos = Ypos+mspeed
+      if mdiffY < 0
+        mob_list[id].Xpos = Xpos
+        mob_list[id].Ypos = Ypos-mspeed
+      if mdiffY is 0
+        mob_list[id].Xpos = Xpos
+        mob_list[id].Ypos = Ypos
+        
+    if mdiffY is 0
+      if mdiffX > 0
+        mob_list[id].Xpos = Xpos+mspeed
+        mob_list[id].Ypos = Ypos
+      if mdiffX < 0
+        mob_list[id].Xpos = Xpos-mspeed
+        mob_list[id].Ypos = Ypos
+      if mdiffX is 0
+        mob_list[id].Xpos = Xpos
+        mob_list[id].Ypos = Ypos
+    
       
   render: =>
     console.log("render", @options)

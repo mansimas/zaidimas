@@ -9,13 +9,13 @@ class WelcomeController < ApplicationController
     monster_object = []
     for monster in monster_list do
       id = ($redis.hget "mobs:#{monster}", 'id').to_i
-      xpos = ($redis.hget "mobs:#{monster}", 'xpos').to_f
-      ypos = ($redis.hget "mobs:#{monster}", 'ypos').to_f
+      xpos = ($redis.hget "mobs:#{monster}", 'xposDest').to_f
+      ypos = ($redis.hget "mobs:#{monster}", 'yposDest').to_f
       xposDest = ($redis.hget "mobs:#{monster}", 'xposDest').to_i
       yposDest = ($redis.hget "mobs:#{monster}", 'yposDest').to_i
       level = ($redis.hget "mobs:#{monster}", 'level').to_i
       health = ($redis.hget "mobs:#{monster}", 'health').to_i
-      monster_object[id] = {id: id, xpos: xpos, ypos: ypos, xposDest: xposDest, yposDest: yposDest, level:level, health:health}
+      monster_object[id] = {id: id, Xpos: xpos, Ypos: ypos, XposDest: xposDest, YposDest: yposDest, level:level, health:health}
     end  
     
     @monsters = monster_object

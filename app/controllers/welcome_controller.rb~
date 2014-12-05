@@ -15,7 +15,7 @@ class WelcomeController < ApplicationController
       yposDest = ($redis.hget "mobs:#{monster}", 'yposDest').to_i
       level = ($redis.hget "mobs:#{monster}", 'level').to_i
       health = ($redis.hget "mobs:#{monster}", 'health').to_i
-      monster_object[id] = {id: id, xpos: xpos, ypos: ypos, xposDest: xposDest, yposDest: yposDest, level:level, health:health}
+      monster_object[id] = {id: id, Xpos: xpos, Ypos: ypos, XposDest: xposDest, YposDest: yposDest, level:level, health:health}
     end  
     
     @monsters = monster_object
