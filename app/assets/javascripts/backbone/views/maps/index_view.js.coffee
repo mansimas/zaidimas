@@ -17,7 +17,12 @@ class Sprint.Views.Maps.IndexView extends Backbone.View
     if move_on_count is 0
       @addAll()
       @game_init_function()
- 
+      
+  addAll: () =>
+    @options.monsters.each(@addOne)
+  addOne: (monster) =>
+    mob_list[monster.attributes.id] = monster.attributes 
+    
   game_init_function: ->
     @ca = document.getElementById("maps")
     @ctx = @ca.getContext "2d"
@@ -26,28 +31,9 @@ class Sprint.Views.Maps.IndexView extends Backbone.View
   get_all_mobs: (mob) ->
     mob_list[mob.id] = mob							# websocket
     
-  fetch_mob: ()->
-    #for mob in mob_list
-      #console.log(mob)
-    #@addAll()			# need only on init
-    #@save_mobs_position()
-    #@receiving_attributes_from_database()
-    
-  addAll: () =>
-    @options.monsters.each(@addOne)
-
-  addOne: (monster) =>
-    mob_list[monster.attributes.id] = monster.attributes
-    
   fps = 40
   last_loop = new Date
   mob_list = []
-  mobbys = []
-  monster_Xspawn_center = 1: 100, 2: 300, 3: 500, 4: 700, 5: 900, 6: 150, 7: 350, 8: 550, 9: 750, 10: 950
-  monster_Yspawn_center = 1: 100, 2: 100, 3: 100, 4: 100, 5: 100, 6: 300, 7: 300, 8: 300, 9: 300, 10: 300
-  spawn_radius = 30
-  monstersas = []
-  enemy_count = []
   target_position = mouseX: 500, mouseY: 250
   this_position = mouseX: 480, mouseY: 240
   last_position = mouseX: 100, mouseY: 100
@@ -68,16 +54,9 @@ class Sprint.Views.Maps.IndexView extends Backbone.View
   enemy_hp = 0
   create_count = 0
   mob_units = 0
-  mob_x_pos = []
-  mob_y_pos = []
-  mob_x_post = []
-  mob_y_post = []
-  mob_x_posdest = []
-  mob_y_posdest = [] 
   mob_saving_number = 0
   move_on_count = 0
   attacking = -1
-  spawn_center = spawnX: 500, spawnY: 250
   attacking_allowed = true
   level = 0
   mspeed = 0.25
@@ -94,9 +73,10 @@ class Sprint.Views.Maps.IndexView extends Backbone.View
    this_loop = new Date
    fps = parseInt(20000 / (this_loop - last_loop))+1
    mspeed = 0.25*(fps/20).toFixed(2)
+   speed = 1*(fps/20).toFixed(2)
    last_loop = this_loop
    
-  target_line: (width, height, rgba, mob, unit) ->
+  target_line: (width, height, rgba, mob) ->
     ctx = @ctx
     ctx.beginPath()
     ctx.lineWidth = 0.5
@@ -155,7 +135,7 @@ class Sprint.Views.Maps.IndexView extends Backbone.View
       ctx.textBaseline = 'top'
       ctx.fillText(mob.level, MobXpos+enemy_width+2, MobYpos)
       
-      @target_line(enemy_width, enemy_height, "rgba(32, 45, 21, 0.2)", mob, "mob")
+      @target_line(enemy_width, enemy_height, "rgba(32, 45, 21, 0.2)", mob)
 
       
       #enemy_count.push Xpos:MobXpos, Ypos:MobYpos, cid:mob.id
@@ -181,7 +161,7 @@ class Sprint.Views.Maps.IndexView extends Backbone.View
     @ctx.fillText(level, this_position.mouseX+7, this_position.mouseY)
     player_object = {Xpos: this_position.mouseX-player_width/2, Ypos: this_position.mouseY-player_height/2,
     XposDest: target_position.mouseX-player_width/2, YposDest: target_position.mouseY-player_height/2}
-    @target_line(player_width, player_height, "red", player_object, "player")
+    @target_line(player_width, player_height, "red", player_object)
         
     if move_allowed is 1
       @ctx.canvas.onmousemove = (evt) ->										# On every mouse move get the mouse position in map
@@ -301,12 +281,10 @@ class Sprint.Views.Maps.IndexView extends Backbone.View
   writing_levels_on_objects_and_health_bars: ->  
     @ctx.fillStyle="red"
     @ctx.fillRect(5,335, 20, -(330*router.stats.models[0].attributes.player_hp/router.stats.models[0].attributes.max_hp))
-    @ctx.fillStyle="red"
     @ctx.fillRect(1075,335, 20, -(330*router.stats.models[0].attributes.monster_hp/router.stats.models[0].attributes.monster_max_hp))	
 
     @ctx.strokeStyle="black"
     @ctx.strokeRect(5,335, 20, -330)
-    @ctx.strokeStyle="black"
     @ctx.strokeRect(1075,335, 20, -330)    
 
     @ctx.fillStyle = '#000000'
