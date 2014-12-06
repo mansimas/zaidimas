@@ -13,7 +13,7 @@ class WelcomeController < ApplicationController
       ypos = -100
       xposDest = -100
       yposDest = -100
-      monster_object[id] = {id: id, Xpos: xpos, Ypos: ypos, XposDest: xposDest, YposDest: yposDest}
+      monster_object[id] = {id: id, xpos: xpos, ypos: ypos, xposDest: xposDest, yposDest: yposDest}
     end  
     
     @monsters = monster_object
