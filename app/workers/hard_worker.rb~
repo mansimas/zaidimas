@@ -5,7 +5,7 @@ class HardWorker < WebsocketRails::BaseController
   def perform
     sleep 2
     puts "started background job"
-    self.recalculate
+    self.reset_database
   end
   
   def player_killed_enemy
