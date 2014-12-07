@@ -28,7 +28,7 @@ class HardWorker < WebsocketRails::BaseController
   
   def reset_database
     $redis.pipelined do
-      (0...5).each do |mob_count|
+      (0...20).each do |mob_count|
         $redis.rpush "mobs", mob_count
         $redis.hset "mobs:#{mob_count}", 'id', "#{mob_count}"
         $redis.hset "mobs:#{mob_count}", 'xpos', 150
