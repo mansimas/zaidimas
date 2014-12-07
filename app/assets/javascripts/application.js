@@ -24,3 +24,4 @@
 
 var dispatcher = new WebSocketRails(window.document.location.host + '/websocket');
 var channel = dispatcher.subscribe('channel_name');
+

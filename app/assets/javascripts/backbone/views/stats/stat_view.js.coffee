@@ -191,7 +191,7 @@ class Sprint.Views.Stats.StatView extends Backbone.View
             else
               player_text_helper = "You made " + dealt_dmg_of_player + " dmg, " + monster_name + " died<br>" + " You won! Your reward is " + monster_exp + " exp <br>You found "+found_item.name
           @attack_allowing()
-          router.set_attack_allowed()
+          router.set_attack_allowed(monster_id)
         $("#text").html(player_text + player_text_helper)
         player_text = player_text + player_text_helper + "<br>"
         $("#text").scrollTop($("#text").prop("scrollHeight"))
@@ -235,64 +235,64 @@ class Sprint.Views.Stats.StatView extends Backbone.View
       monster_text = ""
       self = this
       player = @model.attributes
-      enemy_level = attributes.level
+      enemy_level = attributes
       diff = enemy_level - player.level
-      this_exp = 0
-      if diff is 0
-        this_exp = attributes.experience
-      if diff is -1
-        this_exp = attributes.experience
-      if diff is -2
-        this_exp = attributes.experience-(attributes.experience/100*50)
-      if diff is -3
-        this_exp = attributes.experience-(attributes.experience/100*50)
-      if diff is -4
-        this_exp = attributes.experience-(attributes.experience/100*50)
-      if diff is -5
-        this_exp = attributes.experience-(attributes.experience/100*50)
-      if diff is -6
-        this_exp = attributes.experience-(attributes.experience/100*50)
-      if diff < -6
-        this_exp = 1
-      if diff is 1
-        this_exp = attributes.experience+(attributes.experience/100*50)
-      if diff is 2
-        this_exp = attributes.experience+(attributes.experience/100*50)
-      if diff is 3
-        this_exp = attributes.experience+(attributes.experience/100*50)
-      if diff > 3
-        this_exp = attributes.experience*2
+      this_exp = attributes*2
+      #if diff is 0
+        #this_exp = attributes.experience
+      #if diff is -1
+        #this_exp = attributes.experience
+      #if diff is -2
+        #this_exp = attributes.experience-(attributes.experience/100*50)
+      #if diff is -3
+        #this_exp = attributes.experience-(attributes.experience/100*50)
+      #if diff is -4
+        #this_exp = attributes.experience-(attributes.experience/100*50)
+      #if diff is -5
+        #this_exp = attributes.experience-(attributes.experience/100*50)
+      #if diff is -6
+        #this_exp = attributes.experience-(attributes.experience/100*50)
+      #if diff < -6
+        #this_exp = 1
+      #if diff is 1
+        #this_exp = attributes.experience+(attributes.experience/100*50)
+      #if diff is 2
+        #this_exp = attributes.experience+(attributes.experience/100*50)
+      #if diff is 3
+        #this_exp = attributes.experience+(attributes.experience/100*50)
+      #if diff > 3
+        #this_exp = attributes.experience*2
       
       
-      if (attributes.user_id?)
-        monster_rang= 0
-        monster_level= attributes.level
-        monster_id= attributes.id
-        monster_name= attributes.username
-        monster_hp= attributes.player_hp
-        monster_exp= this_exp
-        monster_money= parseInt(attributes.money/100)
-        monster_min_dmg= attributes.min_dmg
-        monster_max_dmg= attributes.max_dmg
-        monster_speed= attributes.speed
-        monster_defence= attributes.defence
-        monster_critical= attributes.critical
-        monster_critical_multiplier= attributes.critical_multiplier
-      else
-        @model.set(monster_max_hp: attributes.health)
-        monster_rang= attributes.rang
-        monster_level= attributes.level
-        monster_id= attributes.id
-        monster_name= attributes.name
-        monster_hp= attributes.health
-        monster_exp= this_exp
-        monster_money= attributes.money
-        monster_min_dmg= attributes.min_dmg
-        monster_max_dmg= attributes.max_dmg
-        monster_speed= attributes.speed
-        monster_defence= attributes.defence
-        monster_critical= attributes.critical
-        monster_critical_multiplier= attributes.critical_multiplier
+      #if (attributes.user_id?)
+        #monster_rang= 0
+        #monster_level= attributes.level
+        #monster_id= attributes.id
+        #monster_name= attributes.username
+        #monster_hp= attributes.player_hp
+        #monster_exp= this_exp
+        #monster_money= parseInt(attributes.money/100)
+        #monster_min_dmg= attributes.min_dmg
+        #monster_max_dmg= attributes.max_dmg
+        #monster_speed= attributes.speed
+        #monster_defence= attributes.defence
+        #monster_critical= attributes.critical
+        #monster_critical_multiplier= attributes.critical_multiplier
+
+      @model.set(monster_max_hp: attributes*25+10)
+      monster_rang= attributes
+      monster_level= attributes
+      monster_id= attributes
+      monster_name= "monster #{attributes}"
+      monster_hp= attributes*25+10
+      monster_exp= this_exp
+      monster_money= attributes
+      monster_min_dmg= attributes*2+1
+      monster_max_dmg= attributes*5+2
+      monster_speed= 1000+attributes
+      monster_defence= attributes
+      monster_critical= attributes
+      monster_critical_multiplier= 1
       delay 100, ()-> self.start_attacking_monster()
       delay 100, ()-> self.start_attacking_player()
       @show_enemie()

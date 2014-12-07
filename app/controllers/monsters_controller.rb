@@ -4,6 +4,7 @@ class MonstersController < ApplicationController
   end
   
   def new
+    puts "adada"
   end
 
   def show

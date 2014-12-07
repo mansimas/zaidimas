@@ -22,6 +22,5 @@ class WelcomeController < ApplicationController
     @shops = Shop.all
     @stats = Stat.find_by_user_id(current_user.id)
     @chats = Chat.all 
-    
   end
 end

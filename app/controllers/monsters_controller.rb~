@@ -4,6 +4,7 @@ class MonstersController < ApplicationController
   end
   
   def new
+    puts "adada"
   end
 
   def show
@@ -16,7 +17,7 @@ class MonstersController < ApplicationController
   end
 
   def update
-  id = monster_params[:id]  
+    id = monster_params[:id]  
     xpos = monster_params[:Xpos] 
     ypos = monster_params[:Ypos] 
     xposDest = monster_params[:XposDest] 

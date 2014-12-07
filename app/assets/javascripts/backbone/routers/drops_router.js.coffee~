@@ -12,9 +12,6 @@ class Sprint.Routers.DropsRouter extends Backbone.Router
     @chats.reset options.chats
     @monsters = new Sprint.Collections.MonstersCollection()
     @monsters.reset options.monsters
-    
-  initialize: ->
-    console.log(WebSocketRails)
 
   routes:
     "index"                : "index"

@@ -13,8 +13,8 @@ class Sprint.Views.Stats.IndexView extends Backbone.View
   initialize: () ->
     @options.stats.bind('reset', @addAll)
 
-  send_monster_to_player: (attributes) ->
-    statviews[0].attack_monster(attributes)
+  send_monster_to_player: (attributes, cid) ->
+    statviews[0].attack_monster(attributes, cid)
 
   use_this_item: (attributes) ->
     statviews[0].use_this_item(attributes)

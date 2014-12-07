@@ -71,9 +71,9 @@ class Sprint.Routers.DropsRouter extends Backbone.Router
 
 ##########################  Functions  #####################################
 
-  set_attack_allowed: () ->
+  set_attack_allowed: (monster_id) ->
     @view = new Sprint.Views.Maps.IndexView(monsters: @monsters)
-    @view.set_attack_allowed()
+    @view.set_attack_allowed(monster_id)
 
   send_maps_to_monsters: (attributes) ->
     @view = new Sprint.Views.Monsters.IndexView(monsters: @monsters)
