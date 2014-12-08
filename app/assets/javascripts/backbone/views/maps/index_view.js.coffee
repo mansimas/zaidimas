@@ -28,6 +28,8 @@ class Sprint.Views.Maps.IndexView extends Backbone.View
     @move_on()
     
   get_all_mobs: (mob) ->
+    if mob.id is 0
+      console.log("added ", mob)
     mob_list[mob.id] = mob
     mob_speed = 5*web_refresh_time/1000
     steps = parseInt(Math.sqrt((mob.xposDest-mob.xpos)*(mob.xposDest-mob.xpos)+
