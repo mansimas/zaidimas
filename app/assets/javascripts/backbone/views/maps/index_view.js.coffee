@@ -28,8 +28,6 @@ class Sprint.Views.Maps.IndexView extends Backbone.View
     @move_on()
     
   get_all_mobs: (mob) ->
-    if mob.id is 0
-      console.log("added ", mob)
     mob_list[mob.id] = mob
     mob_speed = 5*web_refresh_time/1000
     steps = parseInt(Math.sqrt((mob.xposDest-mob.xpos)*(mob.xposDest-mob.xpos)+
@@ -148,7 +146,6 @@ class Sprint.Views.Maps.IndexView extends Backbone.View
     @target_line(player_width, player_height, "red", player_object)    
     
   canvas: ->
-    console.log(mob_list[0])
     rect = @ca.getBoundingClientRect()
     @ctx.clearRect(rect.top, rect.left, 1500, 500)				# reset the canvas   
     @writing_levels_on_objects_and_health_bars()			
@@ -196,7 +193,7 @@ class Sprint.Views.Maps.IndexView extends Backbone.View
       player_steps = 0
       move_on = 0																			# if yes, stop moving
       if checked_monster.cid > -1
-        #@attack_monster(checked_monster.cid)
+        @attack_monster(checked_monster.cid)
         move_allowed = 0
         attacking = checked_monster.cid
         checked_monster.cid = -1
@@ -252,8 +249,9 @@ class Sprint.Views.Maps.IndexView extends Backbone.View
       @ctx.fillText(mob_list[checked_monster.cid].health, 985, 360)  
       
   player_start_moving: ->
-    this_position.mouseX = (1-1/player_steps)*this_position.mouseX+1/player_steps*target_position.mouseX
-    this_position.mouseY = (1-1/player_steps)*this_position.mouseY+1/player_steps*target_position.mouseY
+    if player_steps > 0
+      this_position.mouseX = (1-1/player_steps)*this_position.mouseX+1/player_steps*target_position.mouseX
+      this_position.mouseY = (1-1/player_steps)*this_position.mouseY+1/player_steps*target_position.mouseY
     alfas = "true"		
 
   mob_start_moving: (mob) ->
