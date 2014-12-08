@@ -146,6 +146,7 @@ class Sprint.Views.Maps.IndexView extends Backbone.View
     @target_line(player_width, player_height, "red", player_object)    
     
   canvas: ->
+    console.log(mob_list[0])
     rect = @ca.getBoundingClientRect()
     @ctx.clearRect(rect.top, rect.left, 1500, 500)				# reset the canvas   
     @writing_levels_on_objects_and_health_bars()			
