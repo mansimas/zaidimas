@@ -257,8 +257,9 @@ class Sprint.Views.Maps.IndexView extends Backbone.View
     alfas = "true"		
 
   mob_start_moving: (mob) ->
-    mob_list[mob.id].xpos = (1-1/mob.steps)*mob.xpos+1/mob.steps*mob.xposDest
-    mob_list[mob.id].ypos = (1-1/mob.steps)*mob.ypos+1/mob.steps*mob.yposDest
+    if mob.steps > 0
+      mob_list[mob.id].xpos = (1-1/mob.steps)*mob.xpos+1/mob.steps*mob.xposDest
+      mob_list[mob.id].ypos = (1-1/mob.steps)*mob.ypos+1/mob.steps*mob.yposDest
       
   window.delay = (ms, fn)-> setTimeout(fn, ms)
   randomInt = (lower, upper) ->
