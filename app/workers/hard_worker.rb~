@@ -81,11 +81,11 @@ class HardWorker < WebsocketRails::BaseController
     def check_monsters
       (1..(2**(0.size * 8 -2) -1)).each do |number|
         for monster in @monster_object do
-          #attacked = ($redis.hget "mobs:#{monster[:id]}", 'attacked').to_i
-          #@monster_object[monster[:id]][:attacked] = attacked
-          #if attacked == 0
-          @monster_object[monster[:id]][:steps] -= 1
-          #end           
+          attacked = ($redis.hget "mobs:#{monster[:id]}", 'attacked').to_i
+          @monster_object[monster[:id]][:attacked] = attacked
+          if attacked == 0
+            @monster_object[monster[:id]][:steps] -= 1
+          end           
           if monster[:steps] <= 0
             recalculateMobDestination(monster)
           end
