@@ -131,7 +131,7 @@ class Sprint.Views.Maps.IndexView extends Backbone.View
       if mob.attacked is 0
         @mob_start_moving(mob)
         mob_list[mob.id].steps -= 1  
-    
+  
   player_rendering: ->
     @recalculatePlayerTarget()
     player_steps -= 1
@@ -193,7 +193,7 @@ class Sprint.Views.Maps.IndexView extends Backbone.View
       player_steps = 0
       move_on = 0																			# if yes, stop moving
       if checked_monster.cid > -1
-        @attack_monster(checked_monster.cid)
+        #@attack_monster(checked_monster.cid)
         move_allowed = 0
         attacking = checked_monster.cid
         checked_monster.cid = -1

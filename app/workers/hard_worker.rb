@@ -9,18 +9,22 @@ class HardWorker < WebsocketRails::BaseController
   end
   
   def player_killed_enemy
-    puts data
     $redis.hset "mobs:#{data}", 'attacked', 0
+    id = ($redis.hget "mobs:#{data}", 'id').to_i
+    xpos = ($redis.hget "mobs:#{data}", 'xpos').to_f
+    ypos = ($redis.hget "mobs:#{data}", 'ypos').to_f
+    xposDest = ($redis.hget "mobs:#{data}", 'xposDest').to_f
+    yposDest = ($redis.hget "mobs:#{data}", 'yposDest').to_f
+    level = ($redis.hget "mobs:#{data}", 'level').to_i
+    health = ($redis.hget "mobs:#{data}", 'health').to_i
+    max_health = ($redis.hget "mobs:#{data}", 'max_health').to_i
+    mob = {id:id, xpos:xpos, ypos:ypos, xposDest:xposDest, attacked:0, 
+    yposDest:yposDest, level:level, health:health, max_health:max_health}
+    WebsocketRails[:channel_name].trigger(:event_name, mob)
   end
   
   def player_attacks_enemy
-    $redis.pipelined do
-      $redis.hset "mobs:#{data[:id]}", 'xpos', data[:xpos]
-      $redis.hset "mobs:#{data[:id]}", 'ypos', data[:ypos]
-      $redis.hset "mobs:#{data[:id]}", 'xposDest', data[:xpos]
-      $redis.hset "mobs:#{data[:id]}", 'yposDest', data[:ypos]
-      $redis.hset "mobs:#{data[:id]}", 'attacked', 1
-    end
+    $redis.hset "mobs:#{data[:id]}", 'attacked', 1
     mob = {id:data[:id], xpos:data[:xpos], ypos:data[:ypos], attacked:1,
     xposDest:data[:xpos], yposDest:data[:ypos], health:data[:health], level:data[:level], max_health:data[:max_health]}
     WebsocketRails[:channel_name].trigger(:event_name, mob)
@@ -68,7 +72,9 @@ class HardWorker < WebsocketRails::BaseController
         steps = (Math.sqrt((xposDest-xpos)*(xposDest-xpos)+(yposDest-ypos)*(yposDest-ypos))/@mob_speed).to_i
         @monster_object[id] = {id:id, xpos:xpos, ypos:ypos, xposDest:xposDest, attacked:attacked, 
         yposDest:yposDest, level:level, health:health, max_health:max_health, steps:steps}
-        WebsocketRails[:channel_name].trigger(:event_name, @monster_object[id])
+        mob = {id:id, xpos:xpos, ypos:ypos, xposDest:xposDest, attacked:attacked, 
+        yposDest:yposDest, level:level, health:health, max_health:max_health}
+        WebsocketRails[:channel_name].trigger(:event_name, mob)
       end  
     end
     
@@ -107,7 +113,8 @@ class HardWorker < WebsocketRails::BaseController
         @monster_object[monster[:id]][:yposDest] = newYpos
         @monster_object[monster[:id]][:steps] = steps
         mob = {id: monster[:id], xpos: monster[:xpos], ypos: monster[:ypos], attacked: monster[:attacked],
-        xposDest: newXpos, yposDest: newYpos, health: monster[:health], level:monster[:level], max_health:monster[:max_health]}
+        xposDest: newXpos, yposDest: newYpos, health: monster[:health], level:monster[:level], 
+        max_health:monster[:max_health]}
         WebsocketRails[:channel_name].trigger(:event_name, mob)
       else
         recalculateMobDestination(monster)  
