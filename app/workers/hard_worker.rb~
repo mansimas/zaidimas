@@ -5,7 +5,7 @@ class HardWorker < WebsocketRails::BaseController
   def perform
     sleep 2
     puts "started background job"
-    self.recalculate
+    self.reset_database
   end
   
   def player_killed_enemy
@@ -32,7 +32,7 @@ class HardWorker < WebsocketRails::BaseController
   
   def reset_database
     $redis.pipelined do
-      (0...20).each do |mob_count|
+      (0...200).each do |mob_count|
         $redis.rpush "mobs", mob_count
         $redis.hset "mobs:#{mob_count}", 'id', "#{mob_count}"
         $redis.hset "mobs:#{mob_count}", 'xpos', 150
