@@ -20,15 +20,28 @@ class Sprint.Views.Maps.IndexView extends Backbone.View
   addAll: () =>
     @options.monsters.each(@addOne)
   addOne: (monster) =>
+    mob_speed = 5*web_refresh_time/1000
     mob_list[monster.attributes.id] = monster.attributes 
-    
+    steps = parseInt(Math.sqrt((monster.attributes.xposDest-monster.attributes.xpos)*(monster.attributes.xposDest-
+    monster.attributes.xpos)+(monster.attributes.yposDest-monster.attributes.ypos)*(monster.attributes.yposDest-
+    monster.attributes.ypos))/mob_speed)
+    mob_list[monster.attributes.id].steps = steps
   game_init_function: ->
     @ca = document.getElementById("maps")
     @ctx = @ca.getContext "2d"
     @move_on()
     
   get_all_mobs: (mob) ->
-    mob_list[mob.id] = mob
+    mob_list[mob.id].id = mob.id
+    mob_list[mob.id].xpos = mob.xpos if mob.xpos?
+    mob_list[mob.id].ypos = mob.ypos if mob.ypos?
+    mob_list[mob.id].xposDest = mob.xposDest if mob.xposDest?
+    mob_list[mob.id].yposDest = mob.yposDest if mob.yposDest?
+    mob_list[mob.id].health = mob.health if mob.health?
+    mob_list[mob.id].level = mob.level if mob.level?
+    mob_list[mob.id].max_health = mob.max_health if mob.max_health?
+    mob_list[mob.id].attacked = mob.attacked if mob.attacked?
+    mob_list[mob.id].steps = mob.steps if mob.steps?
     mob_speed = 5*web_refresh_time/1000
     steps = parseInt(Math.sqrt((mob.xposDest-mob.xpos)*(mob.xposDest-mob.xpos)+
     (mob.yposDest-mob.ypos)*(mob.yposDest-mob.ypos))/mob_speed)
@@ -193,7 +206,7 @@ class Sprint.Views.Maps.IndexView extends Backbone.View
       player_steps = 0
       move_on = 0																			# if yes, stop moving
       if checked_monster.cid > -1
-        #@attack_monster(checked_monster.cid)
+        @attack_monster(checked_monster.cid)
         move_allowed = 0
         attacking = checked_monster.cid
         checked_monster.cid = -1
@@ -218,6 +231,11 @@ class Sprint.Views.Maps.IndexView extends Backbone.View
     attacking_allowed = true
     mob_list[monster_id].attacked = 0
     dispatcher.trigger('player_killed_enemy', monster_id)
+    
+  set_player_as_dead: (monster_id) ->
+    attacking_allowed = true
+    mob_list[monster_id].attacked = 0
+    dispatcher.trigger('enemy_killed_player', monster_id)
 
   writing_levels_on_objects_and_health_bars: ->  
     @ctx.fillStyle="red"
@@ -249,10 +267,10 @@ class Sprint.Views.Maps.IndexView extends Backbone.View
       @ctx.fillText(mob_list[checked_monster.cid].health, 985, 360)  
       
   player_start_moving: ->
+    alfas = "true"	
     if player_steps > 0
       this_position.mouseX = (1-1/player_steps)*this_position.mouseX+1/player_steps*target_position.mouseX
-      this_position.mouseY = (1-1/player_steps)*this_position.mouseY+1/player_steps*target_position.mouseY
-    alfas = "true"		
+      this_position.mouseY = (1-1/player_steps)*this_position.mouseY+1/player_steps*target_position.mouseY		
 
   mob_start_moving: (mob) ->
     if mob.steps > 0

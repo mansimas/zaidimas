@@ -5,29 +5,28 @@ class HardWorker < WebsocketRails::BaseController
   def perform
     sleep 2
     puts "started background job"
-    self.reset_database
+    self.recalculate
+  end
+  
+  def enemy_killed_player
+    $redis.hset "mobs:#{data}", 'attacked', 0
+    xposDest = ($redis.hget "mobs:#{data}", 'xposDest').to_i
+    yposDest = ($redis.hget "mobs:#{data}", 'yposDest').to_i
+    mob = {id: data, xposDest:xposDest, yposDest:yposDest, attacked:0}
+    WebsocketRails[:channel_name].trigger(:event_name, mob)
   end
   
   def player_killed_enemy
     $redis.hset "mobs:#{data}", 'attacked', 0
-    id = ($redis.hget "mobs:#{data}", 'id').to_i
-    xpos = ($redis.hget "mobs:#{data}", 'xpos').to_f
-    ypos = ($redis.hget "mobs:#{data}", 'ypos').to_f
-    xposDest = ($redis.hget "mobs:#{data}", 'xposDest').to_f
-    yposDest = ($redis.hget "mobs:#{data}", 'yposDest').to_f
-    level = ($redis.hget "mobs:#{data}", 'level').to_i
-    health = ($redis.hget "mobs:#{data}", 'health').to_i
-    max_health = ($redis.hget "mobs:#{data}", 'max_health').to_i
-    mob = {id:id, xpos:xpos, ypos:ypos, xposDest:xposDest, attacked:0, 
-    yposDest:yposDest, level:level, health:health, max_health:max_health}
-    WebsocketRails[:channel_name].trigger(:event_name, mob)
+    $redis.hset "mobs:#{data}", 'killed', 1
   end
   
   def player_attacks_enemy
-    $redis.hset "mobs:#{data[:id]}", 'attacked', 1
-    mob = {id:data[:id], xpos:data[:xpos], ypos:data[:ypos], attacked:1,
-    xposDest:data[:xpos], yposDest:data[:ypos], health:data[:health], level:data[:level], max_health:data[:max_health]}
+    xpos = ($redis.hget "mobs:#{data[:id]}", 'xpos').to_i
+    ypos = ($redis.hget "mobs:#{data[:id]}", 'ypos').to_i
+    mob = {id: data[:id], xposDest:xpos, yposDest:ypos}
     WebsocketRails[:channel_name].trigger(:event_name, mob)
+    $redis.hset "mobs:#{data[:id]}", 'attacked', 1
   end
   
   def reset_database
@@ -41,6 +40,8 @@ class HardWorker < WebsocketRails::BaseController
         $redis.hset "mobs:#{mob_count}", 'yposDest', 150
         $redis.hset "mobs:#{mob_count}", 'level', "#{mob_count}"
         $redis.hset "mobs:#{mob_count}", 'attacked', 0
+        $redis.hset "mobs:#{mob_count}", 'killed', 0
+        $redis.hset "mobs:#{mob_count}", 'steps', 10
         if mob_count == 0
           $redis.hset "mobs:#{mob_count}", 'health', 10
           $redis.hset "mobs:#{mob_count}", 'max_health', 10
@@ -53,74 +54,72 @@ class HardWorker < WebsocketRails::BaseController
   end
 
   def recalculate
-    @monster_list = $redis.lrange('mobs', 0, -1)
-    @monster_object= []
     @reload_rate = 0.5
     @mob_speed = 5*@reload_rate
-    
-    def update_database
-      for monster in @monster_list do
-        id = ($redis.hget "mobs:#{monster}", 'id').to_i
-        xpos = ($redis.hget "mobs:#{monster}", 'xpos').to_f
-        ypos = ($redis.hget "mobs:#{monster}", 'ypos').to_f
-        xposDest = ($redis.hget "mobs:#{monster}", 'xposDest').to_f
-        yposDest = ($redis.hget "mobs:#{monster}", 'yposDest').to_f
-        level = ($redis.hget "mobs:#{monster}", 'level').to_i
-        health = ($redis.hget "mobs:#{monster}", 'health').to_i
-        max_health = ($redis.hget "mobs:#{monster}", 'max_health').to_i
-        attacked = ($redis.hget "mobs:#{monster}", 'attacked').to_i   
-        steps = (Math.sqrt((xposDest-xpos)*(xposDest-xpos)+(yposDest-ypos)*(yposDest-ypos))/@mob_speed).to_i
-        @monster_object[id] = {id:id, xpos:xpos, ypos:ypos, xposDest:xposDest, attacked:attacked, 
-        yposDest:yposDest, level:level, health:health, max_health:max_health, steps:steps}
-        mob = {id:id, xpos:xpos, ypos:ypos, xposDest:xposDest, attacked:attacked, 
-        yposDest:yposDest, level:level, health:health, max_health:max_health}
-        WebsocketRails[:channel_name].trigger(:event_name, mob)
-      end  
-    end
-    
     def check_monsters
       (1..(2**(0.size * 8 -2) -1)).each do |number|
-        for monster in @monster_object do
-          attacked = ($redis.hget "mobs:#{monster[:id]}", 'attacked').to_i
-          @monster_object[monster[:id]][:attacked] = attacked
+        monster_list = $redis.lrange('mobs', 0, -1)
+        monster_list.each do |mob|
+          attacked = ($redis.hget "mobs:#{mob}", 'attacked').to_i
+          killed = ($redis.hget "mobs:#{mob}", 'killed').to_i
           if attacked == 0
-            @monster_object[monster[:id]][:steps] -= 1
-          end           
-          if monster[:steps] <= 0
-            recalculateMobDestination(monster)
+            xpos = ($redis.hget "mobs:#{mob}", 'xpos').to_i
+            ypos = ($redis.hget "mobs:#{mob}", 'ypos').to_i
+            xposDest = ($redis.hget "mobs:#{mob}", 'xposDest').to_i
+            yposDest = ($redis.hget "mobs:#{mob}", 'yposDest').to_i
+            steps = ($redis.hget "mobs:#{mob}", 'steps').to_i
+            if killed == 0
+              if steps > 0
+                $redis.hset "mobs:#{mob}", 'xpos', ((1-1.0/steps)*xpos+1.0/steps*xposDest).to_i
+                $redis.hset "mobs:#{mob}", 'ypos', ((1-1.0/steps)*ypos+1.0/steps*yposDest).to_i
+                $redis.hincrby "mobs:#{mob}", 'steps', -1
+              else  #if steps <= 0
+                recalculate_mob_destination(mob, xposDest, yposDest)
+              end
+            else  #if killed is 1
+              respawn_mob(mob)
+              $redis.hset "mobs:#{mob}", 'killed', 0
+            end
           end
         end
         sleep @reload_rate
       end
     end
     
-    def recalculateMobDestination(monster)
+    def respawn_mob(mob)
+      newX = Random.new.rand(50...1000)
+      newY = Random.new.rand(30...350)
+      $redis.pipelined do
+        $redis.hset "mobs:#{mob}", 'xpos', newX
+        $redis.hset "mobs:#{mob}", 'ypos', newY
+      end
+      recalculate_mob_destination(mob, newX, newY)
+    end
+    
+    def recalculate_mob_destination(mob, xposDest, yposDest)
       spawn_radius = 100
-      newXpos = (sprintf '%.3f', (Random.new.rand((monster[:xposDest]-spawn_radius)...(monster[:xposDest]+spawn_radius)))).to_f
-      newYpos = (sprintf '%.3f', (Random.new.rand((monster[:yposDest]-spawn_radius)...(monster[:yposDest]+spawn_radius)))).to_f  
+      newXpos = (Random.new.rand((xposDest-spawn_radius)...(xposDest+spawn_radius))).to_i
+      newYpos = (Random.new.rand((yposDest-spawn_radius)...(yposDest+spawn_radius))).to_i
       if 0 < newXpos &&  newXpos < 1100 && 0 < newYpos && newYpos < 380
+        steps = (Math.sqrt((newXpos-xposDest)*(newXpos-xposDest)+(newYpos-yposDest)*(newYpos-yposDest))/@mob_speed).to_i
         $redis.pipelined do
-          $redis.hset "mobs:#{monster[:id]}", 'xpos', monster[:xposDest]
-          $redis.hset "mobs:#{monster[:id]}", 'ypos', monster[:yposDest]
-          $redis.hset "mobs:#{monster[:id]}", 'xposDest', newXpos
-          $redis.hset "mobs:#{monster[:id]}", 'yposDest', newYpos
+          $redis.hset "mobs:#{mob}", 'steps', steps
+          $redis.hset "mobs:#{mob}", 'xposDest', newXpos
+          $redis.hset "mobs:#{mob}", 'yposDest', newYpos
+          $redis.hset "mobs:#{mob}", 'xpos', xposDest
+          $redis.hset "mobs:#{mob}", 'ypos', yposDest
         end
-        steps = (Math.sqrt((newXpos-monster[:xposDest])*(newXpos-monster[:xposDest])+
-        (newYpos-monster[:yposDest])*(newYpos-monster[:yposDest]))/@mob_speed).to_i
-        @monster_object[monster[:id]][:xpos] = monster[:xposDest]
-        @monster_object[monster[:id]][:ypos] = monster[:yposDest]
-        @monster_object[monster[:id]][:xposDest] = newXpos
-        @monster_object[monster[:id]][:yposDest] = newYpos
-        @monster_object[monster[:id]][:steps] = steps
-        mob = {id: monster[:id], xpos: monster[:xpos], ypos: monster[:ypos], attacked: monster[:attacked],
-        xposDest: newXpos, yposDest: newYpos, health: monster[:health], level:monster[:level], 
-        max_health:monster[:max_health]}
+        level = ($redis.hget "mobs:#{mob}", 'level').to_i
+        health = ($redis.hget "mobs:#{mob}", 'health').to_i
+        max_health = ($redis.hget "mobs:#{mob}", 'max_health').to_i
+        attacked = ($redis.hget "mobs:#{mob}", 'attacked').to_i
+        mob = {id: mob, xpos: xposDest, ypos: yposDest, xposDest: newXpos, yposDest: newYpos, level:level,
+        health:health, max_health:max_health, attacked:attacked}
         WebsocketRails[:channel_name].trigger(:event_name, mob)
       else
-        recalculateMobDestination(monster)  
+        recalculate_mob_destination(mob, xposDest, yposDest)  
       end
     end
-    update_database
     check_monsters
   end
 end

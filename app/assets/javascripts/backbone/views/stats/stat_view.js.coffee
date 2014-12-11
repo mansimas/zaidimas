@@ -222,6 +222,7 @@ class Sprint.Views.Stats.StatView extends Backbone.View
           if succeed_critical_hit < 0
             monster_text_helper = monster_name + " made " + dealt_dmg_of_monster + " dmg, you have 0 Hp<br>You died! "
           monster_hp= 0
+          router.set_player_as_dead(monster_id)
           @attack_allowing()
         $("#text1").html(monster_text + monster_text_helper)
         $("#text1").scrollTop($("#text1").prop("scrollHeight"))
@@ -229,6 +230,7 @@ class Sprint.Views.Stats.StatView extends Backbone.View
         @start_attacking_player()
 
   attack_monster: (attributes) ->
+    attributes=parseInt(attributes)
     if @model.attributes.attack_allow is true and @model.attributes.player_hp > (@model.attributes.max_hp/10)
       @model.set(attack_allow: false)
       player_text = ""

@@ -229,9 +229,8 @@ class Sprint.Views.Stats.StatView extends Backbone.View
         @start_attacking_player()
 
   attack_monster: (attributes) ->
+    attributes=parseInt(attributes)
     if @model.attributes.attack_allow is true and @model.attributes.player_hp > (@model.attributes.max_hp/10)
-      if attributes is 0
-        attributes =1
       @model.set(attack_allow: false)
       player_text = ""
       monster_text = ""
@@ -281,16 +280,16 @@ class Sprint.Views.Stats.StatView extends Backbone.View
         #monster_critical= attributes.critical
         #monster_critical_multiplier= attributes.critical_multiplier
 
-      @model.set(monster_max_hp: attributes*25)
+      @model.set(monster_max_hp: attributes*25+10)
       monster_rang= attributes
       monster_level= attributes
       monster_id= attributes
       monster_name= "monster #{attributes}"
-      monster_hp= attributes*25
+      monster_hp= attributes*25+10
       monster_exp= this_exp
       monster_money= attributes
-      monster_min_dmg= attributes*2
-      monster_max_dmg= attributes*5
+      monster_min_dmg= attributes*2+1
+      monster_max_dmg= attributes*5+2
       monster_speed= 1000+attributes
       monster_defence= attributes
       monster_critical= attributes
