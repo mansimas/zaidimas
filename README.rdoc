@@ -1,28 +1,7 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+This repository was my first own project - an online rpg based game. For it used 7 months.
+Used Canvas and coffeescript mostly, Backbone, also there were background Sidekiq jobs using Ruby syntax, websockets. For monsters sync that for every player would be the same monsters with same positions, used Redis to faster fetch monsters from backend.
+There were 20 monsters in a screen and a max 10 players (max limit allowed to be free). There was a player shop, item upgrade system, stats upgrade system, player inventory, player stats, availability to see monster data, other player data, attack monsters, attack other players, sell items to shop, buy items from other players, sell items to other players, chat.
+Project was deployed using Heroku.
+Now project is taken off, not maintained anymore.
