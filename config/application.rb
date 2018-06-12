@@ -23,6 +23,8 @@ module Sprint
       # We don't want the default of everything that isn't js or css, because it pulls too many things in
       app.config.assets.precompile.shift
 
+      config.middleware.delete Rack::Lock
+
       # Explicitly register the extensions we are interested in compiling
       app.config.assets.precompile.push(Proc.new do |path|
         File.extname(path).in? [

@@ -24,5 +24,5 @@ end
 gem 'redis', '~> 3.1.0'
 gem 'sidekiq'
 gem 'hiredis'
-gem 'websocket-rails', '~> 0.7.0'
+gem 'websocket-rails'
 gem 'thin'

@@ -5,3 +5,16 @@ Used Canvas and coffeescript mostly, Backbone, also there were background Sideki
 There were 20 monsters in a screen and a max 10 players (max limit allowed to be free). There was a player shop, item upgrade system, stats upgrade system, player inventory, player stats, availability to see monster data, other player data, attack monsters, attack other players, sell items to shop, buy items from other players, sell items to other players, chat.
 Project was deployed using Heroku.
 Now project is taken off, not maintained anymore.
+
+
+rvm install 2.1.2
+rvm use 2.1.2
+bundle install
+rake db:create
+rake db:migrate
+bundle exec sidekiq
+redis-server
+thin start -R config.ru -p 9292
+rails console
+Hardowker.new.reset_database # to spawn mobs
+now register and play

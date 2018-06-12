@@ -1,21 +1,20 @@
-
-default: &default
-  adapter: postgresql
-  encoding: unicode
-  pool: 5
-
 development:
   adapter: sqlite3
+  encoding: unicode
   pool: 5
   timeout: 5000
   database: db/development.sqlite3
 
 test:
-  <<: *default
-  database: postgrepvz_test
+  adapter: sqlite3
+  encoding: unicode
+  pool: 5
+  timeout: 5000
+  database: db/development.sqlite3
 
 production:
-  <<: *default
-  database: postgrepvz_production
-  username: postgrepvz
-  password: <%= ENV['POSTGREPVZ_DATABASE_PASSWORD'] %>
+  adapter: sqlite3
+  encoding: unicode
+  pool: 5
+  timeout: 5000
+  database: db/development.sqlite3
